@@ -1,0 +1,8 @@
+{
+    "name": "TDD_Visualization",
+    "version": "1.0.0",
+    "keywords": ["util", "functional", "server", "client", "browser"],
+    "author": "Putkis",
+    "contributors": [],
+    "dependencies": {}
+}
