@@ -30,11 +30,11 @@ and open the template in the editor.
         [28,"testFirst"], [30,"testlast"], [31,"refactor"],[32,"testFirst"], [34,"refactor"], [38,"refactor"], [40,"testFirst"], [42,"testLast"], 
         [45,"testLast"], [46,"refactor"], [47,"testLast"],[49,"refactor"], [50,"testFirst"] ];
             var informations = [["Data Coverage:",1],["Number of actions:",2],["Time Taken:",3],["Passing Tests:",4],["Failing Tests:",5]];
-            var svgHeigth = 600;
+            var svgHeigth = 400;
             var svgWidth = 1000;
             var padding = 30;
             var previousWidth = 0;
-            var barPadding = 8;
+            var barPadding = 30;
             var svg = d3.select("body")
                         .append("svg")
                         .attr("width", svgWidth)
@@ -70,15 +70,12 @@ and open the template in the editor.
                 .enter()
                 .append("rect")
                 .attr("x", function(d, i) {
-                    return i * dataset.length + 30 + previousWidth;  
+                      return i * (svgWidth / dataset.length) + 30;  
                 })
                 .attr("y", function(d) {
                     return svgHeigth - d[0] *6 -25;  //Height minus data value
                 })
-                .attr("width", function(d, i) {
-                    previousWidth = i * dataset.length + 30 - barPadding;
-                    return i * dataset.length + 30 - barPadding;  //Bar width of 20 plus 1 for padding
-                })
+                .attr("width", svgWidth / dataset.length - barPadding)
                 .attr("height", function(d) {
                     return d[0] * 6;
                 })
