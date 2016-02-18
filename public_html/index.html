@@ -29,7 +29,7 @@ and open the template in the editor.
             var dataset = [ [5,"testLast"], [10,"testFirst"], [15,"refactor"], [20,"testLast"], [21,"testFirst"], [25,"refactor"], [26,"testLast"], 
         [28,"testFirst"], [30,"testlast"], [31,"refactor"],[32,"testFirst"], [34,"refactor"], [38,"refactor"], [40,"testFirst"], [42,"testLast"], 
         [45,"testLast"], [46,"refactor"], [47,"testLast"],[49,"refactor"], [50,"testFirst"] ];
-            var informations = [["Data Coverage:",1],["Number of actions:",2],["Time Taken:",3],["Passing Tests:",4],["Failing Tests:",5]];
+            var informations = [["Data Coverage: 58.76%",1],["Number of actions: 30",2],["Time Taken: 600 sec",3],["Passing Tests: 10",4],["Failing Tests: 0",5]];
             var svgHeigth = 400;
             var svgWidth = 1000;
             var padding = 30;
@@ -70,7 +70,7 @@ and open the template in the editor.
                 .enter()
                 .append("rect")
                 .attr("x", function(d, i) {
-                      return i * (svgWidth / dataset.length) + 30;  
+                      return i * (svgWidth / dataset.length) + 30.5;  
                 })
                 .attr("y", function(d) {
                     return svgHeigth - d[0] *6 -25;  //Height minus data value
@@ -81,20 +81,38 @@ and open the template in the editor.
                 })
                 .attr("fill", function(d) {
                     if (d[1] === "testLast")
-                        return "rgb(200, 50, 50)";
+                        return "rgb(130, 50, 50)";
                     else if(d[1] === "testFirst")
-                        return "rgb(50, 200, 50)";
+                        return "rgb(50, 130, 50)";
                     else
-                        return "rgb(0, 50, 200)";
+                        return "rgb(50, 50, 130)";
                 })
                 .on("click", function() {
                       svgInfo.selectAll("text")
                              .append("text")
                              .text(function(d) {
-                                return d[0];
-                             });
+                                return d[1];
+                             })
+                             .attr("y", function(d){
+                                return d[1] * 70;
+                             })
+                             .attr("x", 300)
+                             .style("font-size","25px");
                 });
-            svgInfo.selectAll("rect")
+                svg.selectAll("text")
+                   .data(dataset)
+                   .enter()
+                   .append("text")
+                   .text(function(d) {
+                        return d;
+                   })
+                   .attr("x", function(d, i) {
+                        return i * (w / dataset.length);
+                    })
+                    .attr("y", function(d) {
+                        return h - (d * 4);
+                    });
+            svgInfo.selectAll("text")
                 .data(informations)
                 .enter()
                 .append("text")
