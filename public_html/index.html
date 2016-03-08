@@ -8,7 +8,7 @@ and open the template in the editor.
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>D3 Test</title>
+        <title>Zorro Episode Visualization</title>
         <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <style>
             .axis path,
@@ -26,15 +26,15 @@ and open the template in the editor.
     </head>
     <body>
         <script type="text/javascript">
-            var dataset = [ [5,"testLast"], [10,"testFirst"], [15,"refactor"], [20,"testLast"], [21,"testFirst"], [25,"refactor"], [26,"testLast"], 
-        [28,"testFirst"], [30,"testlast"], [31,"refactor"],[32,"testFirst"], [34,"refactor"], [38,"refactor"], [40,"testFirst"], [42,"testLast"], 
-        [45,"testLast"], [46,"refactor"], [47,"testLast"],[49,"refactor"], [50,"testFirst"] ];
+            var dataset = [ [5,"testLast"], [10,"testFirst"], [15,"testAddition"], [20,"testLast"], [21,"codeProduction"], [25,"refactor"], [26,"testLast"], 
+        [28,"codeProduction"], [30,"testlast"], [31,"refactor"],[32,"regression"], [34,"refactor"], [38,"codeProduction"], [40,"testFirst"], [42,"testLast"], 
+        [45,"testAddition"], [46,"refactor"], [47,"codeProduction"],[49,"refactor"], [50,"testFirst"] ];
             var informations = [["Data Coverage: 58.76%",1],["Number of actions: 30",2],["Time Taken: 600 sec",3],["Passing Tests: 10",4],["Failing Tests: 0",5]];
             var svgHeigth = 400;
             var svgWidth = 1000;
             var padding = 30;
             var previousWidth = 0;
-            var barPadding = 30;
+            var barPadding = 40;
             var svg = d3.select("body")
                         .append("svg")
                         .attr("width", svgWidth)
@@ -44,11 +44,11 @@ and open the template in the editor.
                         .attr("width", svgWidth)
                         .attr("height", svgHeigth);    
             var xScale = d3.scale.linear()
-                           .domain([0,480])
-                           .range([0,965]);
+                           .domain([0,240])
+                           .range([5,965]);
             var yScale = d3.scale.linear()
                            .domain([100,0])
-                           .range([0, 560]);       
+                           .range([0, 360]);                          
             var xAxis =  d3.svg.axis()
                            .scale(xScale)
                            .orient("bottom")
@@ -61,6 +61,7 @@ and open the template in the editor.
                .attr("class", "axis")
                .attr("transform", "translate(25," + (svgHeigth - padding + 5 ) + ")")
                .call(xAxis);
+               //.text("loistavaa")
             svg.append("g")
                .attr("class", "axis")
                .attr("transform", "translate(" + padding + ",14)")
@@ -73,7 +74,7 @@ and open the template in the editor.
                       return i * (svgWidth / dataset.length) + 30.5;  
                 })
                 .attr("y", function(d) {
-                    return svgHeigth - d[0] *6 -25;  //Height minus data value
+                    return svgHeigth - d[0] *6 -25.3;  //Height minus data value
                 })
                 .attr("width", svgWidth / dataset.length - barPadding)
                 .attr("height", function(d) {
@@ -81,11 +82,17 @@ and open the template in the editor.
                 })
                 .attr("fill", function(d) {
                     if (d[1] === "testLast")
-                        return "rgb(130, 50, 50)";
+                        return "rgb(204, 0, 0)";
                     else if(d[1] === "testFirst")
-                        return "rgb(50, 130, 50)";
+                        return "rgb(0, 204, 0)";
+                    else if(d[1] === "testAddition")
+                        return "rgb(204, 0, 204)";
+                    else if(d[1] === "regression")
+                        return "rgb(204, 204, 0)";
+                    else if(d[1] === "codeProduction")
+                        return "rgb(204, 102, 0)";
                     else
-                        return "rgb(50, 50, 130)";
+                        return "rgb(0, 0, 204)";
                 })
                 .on("click", function() {
                       svgInfo.selectAll("text")
