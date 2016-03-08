@@ -24,7 +24,7 @@ and open the template in the editor.
             } 
         </style>
     </head>
-    <body>
+    <body>  
         <script type="text/javascript">
             var dataset = [ [5,"testLast"], [10,"testFirst"], [15,"testAddition"], [20,"testLast"], [21,"codeProduction"], [25,"refactor"], [26,"testLast"], 
         [28,"codeProduction"], [30,"testlast"], [31,"refactor"],[32,"regression"], [34,"refactor"], [38,"codeProduction"], [40,"testFirst"], [42,"testLast"], 
@@ -33,6 +33,7 @@ and open the template in the editor.
             var svgHeigth = 400;
             var svgWidth = 1000;
             var padding = 30;
+            color = d3.scale.category10();
             var previousWidth = 0;
             var barPadding = 40;
             var svg = d3.select("body")
@@ -41,8 +42,12 @@ and open the template in the editor.
                         .attr("height", svgHeigth);
             var svgInfo = d3.select("body")
                         .append("svg")
-                        .attr("width", svgWidth)
-                        .attr("height", svgHeigth);    
+                        .attr("width", svgWidth - 300)
+                        .attr("height", svgHeigth);
+            var legend = d3.select("body")                            
+                            .append("svg")
+                            .attr("width", svgWidth - 500)
+                            .attr("height", svgHeigth);
             var xScale = d3.scale.linear()
                            .domain([0,240])
                            .range([5,965]);
@@ -82,7 +87,10 @@ and open the template in the editor.
                 })
                 .attr("fill", function(d) {
                     if (d[1] === "testLast")
+                        {
+                        color = "rgb(204,0,0)";    
                         return "rgb(204, 0, 0)";
+                        }
                     else if(d[1] === "testFirst")
                         return "rgb(0, 204, 0)";
                     else if(d[1] === "testAddition")
@@ -130,7 +138,34 @@ and open the template in the editor.
                     return d[1] * 70;
                 })
                 .style("font-size","25px");
-
+             // draw legend colored rectangles
+            legend.append("rect")
+                  .dataset(informations)
+                  .attr("x", 0)
+                  .attr("y",10)
+                  .attr("width", 18)
+                  .attr("height", 18)
+                  .attr("fill", function(d) {
+                    if (d[1] === "testLast")    
+                        return "rgb(204, 0, 0)";
+                    else if(d[1] === "testFirst")
+                        return "rgb(0, 204, 0)";
+                    else if(d[1] === "testAddition")
+                        return "rgb(204, 0, 204)";
+                    else if(d[1] === "regression")
+                        return "rgb(204, 204, 0)";
+                    else if(d[1] === "codeProduction")
+                        return "rgb(204, 102, 0)";
+                    else
+                        return "rgb(0, 0, 204)";
+                });
+            // draw legend text
+            legend.append("text")
+                  .attr("x", 0)
+                  .attr("y", 9)
+                  .attr("dy", ".35em")
+                  .style("text-anchor", "end")
+                  .text(function(d) { return d;});
         </script>
     </body>
 </html>
