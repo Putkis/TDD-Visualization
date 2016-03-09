@@ -28,7 +28,7 @@ and open the template in the editor.
     <body>  
         <script type="text/javascript">
             var dataset = [ [5,"testLast"], [10,"testFirst"], [15,"testAddition"], [20,"testLast"], [21,"codeProduction"], [25,"refactor"], [26,"testLast"], 
-        [28,"codeProduction"], [30,"testlast"], [31,"refactor"],[32,"regression"], [34,"refactor"], [38,"codeProduction"], [40,"testFirst"], [42,"testLast"], 
+        [28,"codeProduction"], [30,"testLast"], [31,"refactor"],[32,"regression"], [34,"refactor"], [38,"regression"], [40,"testFirst"], [42,"testLast"], 
         [45,"testAddition"], [46,"refactor"], [47,"codeProduction"],[49,"refactor"], [50,"testFirst"] ];
             var informations = [["Data Coverage: 58.76%",1],["Number of actions: 30",2],["Time Taken: 600 sec",3],["Passing Tests: 10",4],["Failing Tests: 0",5]];
             var svgHeigth = 400;
@@ -151,18 +151,18 @@ and open the template in the editor.
                     if (d[1] === "testLast")
                           return 10;
                     else if(d[1] === "testFirst")
-                          return 30;
+                          return 45;
                     else if(d[1] === "testAddition")
-                        return 50;
+                        return 80;
                     else if(d[1] === "regression")
-                        return 70;
+                        return 115;
                     else if(d[1] === "codeProduction")
-                        return 90;
+                        return 150;
                     else
-                        return 110;
+                        return 185;
                 })
-                 .attr("width", 15)
-                 .attr("height", 15)
+                 .attr("width", 30)
+                 .attr("height", 30)
                  .style("fill", function(d) {
                     if (d[1] === "testLast")
                         {
@@ -182,7 +182,31 @@ and open the template in the editor.
                         return "rgb(204, 102, 0)";
                     else
                         return "rgb(0, 0, 204)";
+                });
+            legend.selectAll('text')
+                 .data(dataset)
+                 .enter()
+                 .append("text")
+                 .text(function(d) 
+                 {
+                     return d[1];
+                 })
+                 .attr("x",100)
+                 .attr("y", function(d) {
+                    if (d[1] === "testLast")
+                          return 30;
+                    else if(d[1] === "testFirst")
+                          return 65;
+                    else if(d[1] === "testAddition")
+                        return 100;
+                    else if(d[1] === "regression")
+                        return 135;
+                    else if(d[1] === "codeProduction")
+                        return 170;
+                    else
+                        return 205;
                 })
+                .style("font-size","25px");
         </script>
     </body>
 </html>
