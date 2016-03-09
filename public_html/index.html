@@ -9,7 +9,6 @@ and open the template in the editor.
     <head>
         <meta charset="utf-8">
         <title>Zorro Episode Visualization</title>
-        <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <style>
             .axis path,
             .axis line {
@@ -23,6 +22,8 @@ and open the template in the editor.
                 font-size: 11px;
             } 
         </style>
+            <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+            <script src="d3.legend.js"></script>
     </head>
     <body>  
         <script type="text/javascript">
@@ -33,7 +34,6 @@ and open the template in the editor.
             var svgHeigth = 400;
             var svgWidth = 1000;
             var padding = 30;
-            color = d3.scale.category10();
             var previousWidth = 0;
             var barPadding = 40;
             var svg = d3.select("body")
@@ -92,7 +92,10 @@ and open the template in the editor.
                         return "rgb(204, 0, 0)";
                         }
                     else if(d[1] === "testFirst")
+                    {                        
+                        color = "rgb(0, 204, 0)";
                         return "rgb(0, 204, 0)";
+                    }
                     else if(d[1] === "testAddition")
                         return "rgb(204, 0, 204)";
                     else if(d[1] === "regression")
@@ -139,17 +142,38 @@ and open the template in the editor.
                 })
                 .style("font-size","25px");
              // draw legend colored rectangles
-            legend.append("rect")
-                  .dataset(informations)
-                  .attr("x", 0)
-                  .attr("y",10)
-                  .attr("width", 18)
-                  .attr("height", 18)
-                  .attr("fill", function(d) {
-                    if (d[1] === "testLast")    
-                        return "rgb(204, 0, 0)";
+           legend.selectAll('rect')
+                 .data(dataset)
+                 .enter()
+                 .append("rect")
+                 .attr("x", svgWidth - 965)
+                 .attr("y", function(d) {
+                    if (d[1] === "testLast")
+                          return 10;
                     else if(d[1] === "testFirst")
+                          return 30;
+                    else if(d[1] === "testAddition")
+                        return 50;
+                    else if(d[1] === "regression")
+                        return 70;
+                    else if(d[1] === "codeProduction")
+                        return 90;
+                    else
+                        return 110;
+                })
+                 .attr("width", 15)
+                 .attr("height", 15)
+                 .style("fill", function(d) {
+                    if (d[1] === "testLast")
+                        {
+                        color = "rgb(204,0,0)";    
+                        return "rgb(204, 0, 0)";
+                        }
+                    else if(d[1] === "testFirst")
+                    {                        
+                        color = "rgb(0, 204, 0)";
                         return "rgb(0, 204, 0)";
+                    }
                     else if(d[1] === "testAddition")
                         return "rgb(204, 0, 204)";
                     else if(d[1] === "regression")
@@ -158,14 +182,7 @@ and open the template in the editor.
                         return "rgb(204, 102, 0)";
                     else
                         return "rgb(0, 0, 204)";
-                });
-            // draw legend text
-            legend.append("text")
-                  .attr("x", 0)
-                  .attr("y", 9)
-                  .attr("dy", ".35em")
-                  .style("text-anchor", "end")
-                  .text(function(d) { return d;});
+                })
         </script>
     </body>
 </html>
