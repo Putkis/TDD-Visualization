@@ -27,10 +27,10 @@ and open the template in the editor.
     </head>
     <body>  
         <script type="text/javascript">
-            var dataset = [ [5,"testLast"], [10,"testFirst"], [15,"testAddition"], [20,"testLast"], [21,"codeProduction"], [25,"refactor"], [26,"testLast"], 
+            var dataset = [ [5,"testLast","58%"], [10,"testFirst"], [15,"testAddition"], [20,"testLast"], [21,"codeProduction"], [25,"refactor"], [26,"testLast"], 
         [28,"codeProduction"], [30,"testLast"], [31,"refactor"],[32,"regression"], [34,"refactor"], [38,"regression"], [40,"testFirst"], [42,"testLast"], 
         [45,"testAddition"], [46,"refactor"], [47,"codeProduction"],[49,"refactor"], [50,"testFirst"] ];
-            var informations = [["Data Coverage: 58.76%",1],["Number of actions: 30",2],["Time Taken: 600 sec",3],["Passing Tests: 10",4],["Failing Tests: 0",5]];
+            var informations = [["Data Coverage: 54%",1],["Number of actions: 65",2],["Time Taken: 122",3],["Passing Tests: 2",4],["Failing Tests: 0",5]];
             var svgHeigth = 400;
             var svgWidth = 1000;
             var padding = 30;
@@ -107,15 +107,16 @@ and open the template in the editor.
                 })
                 .on("click", function() {
                       svgInfo.selectAll("text")
+                             .data(informations)
+                             .enter()
                              .append("text")
                              .text(function(d) {
-                                return d[1];
+                                return d[0];
                              })
                              .attr("y", function(d){
                                 return d[1] * 70;
                              })
-                             .attr("x", 300)
-                             .style("font-size","25px");
+                .style("font-size","25px");
                 });
                 svg.selectAll("text")
                    .data(dataset)
@@ -130,7 +131,7 @@ and open the template in the editor.
                     .attr("y", function(d) {
                         return h - (d * 4);
                     });
-            svgInfo.selectAll("text")
+             /*svgInfo.selectAll("text")
                 .data(informations)
                 .enter()
                 .append("text")
@@ -140,7 +141,7 @@ and open the template in the editor.
                 .attr("y", function(d){
                     return d[1] * 70;
                 })
-                .style("font-size","25px");
+                .style("font-size","25px");*/
              // draw legend colored rectangles
            legend.selectAll('rect')
                  .data(dataset)
@@ -149,17 +150,17 @@ and open the template in the editor.
                  .attr("x", svgWidth - 965)
                  .attr("y", function(d) {
                     if (d[1] === "testLast")
-                          return 10;
+                          return 30;
                     else if(d[1] === "testFirst")
-                          return 45;
+                          return 65;
                     else if(d[1] === "testAddition")
-                        return 80;
+                        return 100;
                     else if(d[1] === "regression")
-                        return 115;
+                        return 135;
                     else if(d[1] === "codeProduction")
-                        return 150;
+                        return 170;
                     else
-                        return 185;
+                        return 205;
                 })
                  .attr("width", 30)
                  .attr("height", 30)
@@ -194,17 +195,17 @@ and open the template in the editor.
                  .attr("x",100)
                  .attr("y", function(d) {
                     if (d[1] === "testLast")
-                          return 30;
+                          return 50;
                     else if(d[1] === "testFirst")
-                          return 65;
+                          return 85;
                     else if(d[1] === "testAddition")
-                        return 100;
+                        return 120;
                     else if(d[1] === "regression")
-                        return 135;
+                        return 155;
                     else if(d[1] === "codeProduction")
-                        return 170;
+                        return 190;
                     else
-                        return 205;
+                        return 225;
                 })
                 .style("font-size","25px");
         </script>
