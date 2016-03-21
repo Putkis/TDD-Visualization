@@ -26,111 +26,118 @@ and open the template in the editor.
   </head>
   <body>
     <script type="text/javascript">
-      var dataset = [ [5,"testLast","58%"], [10,"testFirst"], [15,"testAddition"], [20,"testLast"], [21,"codeProduction"], [25,"refactor"], [26,"testLast"],
-        [28,"codeProduction"], [30,"testLast"], [31,"refactor"],[32,"regression"], [34,"refactor"], [38,"regression"], [40,"testFirst"], [42,"testLast"],
-        [45,"testAddition"], [46,"refactor"], [47,"codeProduction"],[49,"refactor"], [50,"testFirst"] ];
+
         var informations = [["Data Coverage: 54%",1],["Number of actions: 65",2],["Time Taken: 122",3],["Passing Tests: 2",4],["Failing Tests: 0",5]];
+        
+        //Initializing needed variablews for UI, like paddings and measures for SVGs
         var svgHeigth = 400;
         var svgWidth = 1000;
         var padding = 30;
         var previousWidth = 0;
         var barPadding = 40;
+        
+        //Initializing needed variables, like scales,axises and svgs.
         var svg = d3.select("body")
-        .append("svg")
-        .attr("width", svgWidth)
-        .attr("height", svgHeigth);
+            .append("svg")
+            .attr("width", svgWidth)
+            .attr("height", svgHeigth);       
         var svgInfo = d3.select("body")
-        .append("svg")
-        .attr("width", svgWidth - 300)
-        .attr("height", svgHeigth);
+            .append("svg")
+            .attr("width", svgWidth - 300)
+            .attr("height", svgHeigth);        
         var legend = d3.select("body")
-        .append("svg")
-        .attr("width", svgWidth - 500)
-        .attr("height", svgHeigth);
+            .append("svg")
+            .attr("width", svgWidth - 500)
+            .attr("height", svgHeigth);        
         var xScale = d3.scale.linear()
-        .domain([0,240])
-        .range([5,965]);
+            .domain([0,240])
+            .range([5,965]);        
         var yScale = d3.scale.linear()
-        .domain([100,0])
-        .range([0, 360]);
+            .domain([100,0])
+            .range([0, 360]);        
         var xAxis =  d3.svg.axis()
-        .scale(xScale)
-        .orient("bottom")
-        .ticks(20);
+            .scale(xScale)
+            .orient("bottom")
+            .ticks(20);        
         var yAxis = d3.svg.axis()
-        .scale(yScale)
-        .orient("left")
-        .ticks(20);
-
+            .scale(yScale)
+            .orient("left")
+            .ticks(20);
+    
+        //Creating new data format to being able to parse the data.
         d3.csv("bar-data.csv", function(error, data){
           data.forEach(function(d) {
             d.duration = d.Duration;
             d.action = d.Action;
           });
-          svg.append("g")
+          
+        //creating the first SVG . The "g" element is a container used to group other SVG elements.
+        svg.append("g")
           .attr("class", "axis")
           .attr("transform", "translate(25," + (svgHeigth - padding + 5 ) + ")")
           .call(xAxis);
-          //.text("loistavaa")
-          svg.append("g")
+        svg.append("g")
           .attr("class", "axis")
           .attr("transform", "translate(" + padding + ",14)")
           .call(yAxis);
-          svg.selectAll("rect")
+        svg.selectAll("rect")
           .data(data)
           .enter()
           .append("rect")
+          //setting starting point in the x-axis
           .attr("x", function(d, i) {
-            // return i * (svgWidth / d.length) + 30.5;
             return 300;
           })
+          //setting starting point in the y-axis
           .attr("y", function(d) {
-            // return svgHeigth - d[3] *6 -25.3;  //Height minus data value
             return 300;
           })
-          .attr("width", function(d){return svgWidth / d.duration })
+          //setting width of the bar
+          .attr("width", function(d){return svgWidth / d.duration; })
+          //setting height of the bar
           .attr("height", function(d) {
             return d.duration * 3;
           })
+          //setting colour of the bar
           .attr("fill", function(d) {
-            if (d[1] === "testLast")
+            if (d.action === "testLast")
               {
                 color = "rgb(204,0,0)";
                 return "rgb(204, 0, 0)";
               }
-              else if(d[1] === "testFirst")
+              else if(d.action === "testFirst")
                 {
                   color = "rgb(0, 204, 0)";
                   return "rgb(0, 204, 0)";
                 }
-                else if(d[1] === "testAddition")
+                else if(d.action === "testAddition")
                   return "rgb(204, 0, 204)";
-                else if(d[1] === "regression")
+                else if(d.action === "regression")
                   return "rgb(204, 204, 0)";
-                else if(d[1] === "codeProduction")
+                else if(d.action === "codeProduction")
                   return "rgb(204, 102, 0)";
                 else
                   return "rgb(0, 0, 204)";
           })
           .on("click", function() {
             svgInfo.selectAll("text")
-            .data(informations)
+            .data(data)
             .enter()
             .append("text")
             .text(function(d) {
-              return d[0];
+              return d.action;
             })
             .attr("y", function(d){
-              return d[1] * 70;
+              return d.duration;
             })
             .style("font-size","25px");
           });
           svg.selectAll("text")
-          .data(dataset)
+          .data(data)
           .enter()
           .append("text")
           .text(function(d) {
-            return d;
+            return d.action;
           })
           .attr("x", function(d, i) {
             return i * (w / dataset.length);
@@ -138,84 +145,75 @@ and open the template in the editor.
           .attr("y", function(d) {
             return h - (d * 4);
           })
+        
+        // draw legend for colored rectangles
+        legend.selectAll('rect')
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("x", svgWidth - 965)
+            .attr("y", function(d) 
+            {
+                if (d.action === "testLast")
+                    return 30;
+                else if(d.action === "testFirst")
+                    return 65;
+                else if(d.action === "testAddition")
+                    return 100;
+                else if(d.action === "regression")
+                    return 135;
+                else if(d.action === "codeProduction")
+                    return 170;
+                else
+                    return 205;
+            })
+            .attr("width", 30)
+            .attr("height", 30)
+            .style("fill", function(d) {
+                if (d.action === "testLast")
+                {
+                    color = "rgb(204,0,0)";
+                    return "rgb(204, 0, 0)";
+                }
+                else if(d.action === "testFirst")
+                {
+                    color = "rgb(0, 204, 0)";
+                    return "rgb(0, 204, 0)";
+                }
+                else if(d.action === "testAddition")
+                    return "rgb(204, 0, 204)";
+                else if(d.action === "regression")
+                    return "rgb(204, 204, 0)";
+                else if(d.action === "codeProduction")
+                    return "rgb(204, 102, 0)";
+                else
+                    return "rgb(0, 0, 204)";
+                });
+        legend.selectAll('text')
+            .data(data)
+            .enter()
+            .append("text")
+            .text(function(d)
+            {
+                return d.action;
+            })
+            .attr("x",100)
+            .attr("y", function(d) {
+                if (d.action === "testLast")
+                    return 50;
+                else if(d.action === "testFirst")
+                    return 85;
+                else if(d.action === "testAddition")
+                    return 120;
+                else if(d.action === "regression")
+                    return 155;
+                else if(d.action === "codeProduction")
+                    return 190;
+                else
+                    return 225;
+                })
+            .style("font-size","25px");
         });
-        /*svgInfo.selectAll("text")
-          .data(informations)
-          .enter()
-          .append("text")
-          .text(function(d) {
-          return d[0];
-          })
-          .attr("y", function(d){
-          return d[1] * 70;
-          })
-          .style("font-size","25px");*/
-// draw legend colored rectangles
-  legend.selectAll('rect')
-  .data(dataset)
-.enter()
-  .append("rect")
-  .attr("x", svgWidth - 965)
-  .attr("y", function(d) {
-      if (d[1] === "testLast")
-      return 30;
-      else if(d[1] === "testFirst")
-      return 65;
-      else if(d[1] === "testAddition")
-      return 100;
-      else if(d[1] === "regression")
-      return 135;
-      else if(d[1] === "codeProduction")
-      return 170;
-      else
-      return 205;
-      })
-.attr("width", 30)
-.attr("height", 30)
-.style("fill", function(d) {
-    if (d[1] === "testLast")
-    {
-    color = "rgb(204,0,0)";
-    return "rgb(204, 0, 0)";
-    }
-    else if(d[1] === "testFirst")
-    {
-    color = "rgb(0, 204, 0)";
-    return "rgb(0, 204, 0)";
-    }
-    else if(d[1] === "testAddition")
-    return "rgb(204, 0, 204)";
-    else if(d[1] === "regression")
-    return "rgb(204, 204, 0)";
-    else if(d[1] === "codeProduction")
-    return "rgb(204, 102, 0)";
-    else
-    return "rgb(0, 0, 204)";
-    });
-  legend.selectAll('text')
-  .data(dataset)
-.enter()
-  .append("text")
-.text(function(d)
-    {
-    return d[1];
-    })
-.attr("x",100)
-.attr("y", function(d) {
-    if (d[1] === "testLast")
-    return 50;
-    else if(d[1] === "testFirst")
-    return 85;
-    else if(d[1] === "testAddition")
-    return 120;
-    else if(d[1] === "regression")
-    return 155;
-    else if(d[1] === "codeProduction")
-    return 190;
-    else
-    return 225;
-    })
-.style("font-size","25px");
     </script>
   </body>
 </html>
