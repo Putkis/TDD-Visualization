@@ -33,7 +33,7 @@ and open the template in the editor.
         var svgWidth = 1000;
         var padding = 30;
         var previousWidth = 0;
-        var barPadding = 30;
+        var barPadding = 5;
         var totalWidth = 0;
         
         //Initializing needed variables, like scales,axises and svgs.
@@ -86,8 +86,16 @@ and open the template in the editor.
           .append("rect")
           //setting starting point in the x-axis
           .attr("x", function(d,i) {
-              //return 7 + barPadding + d.duration;
-              return i * (svgWidth / data.length)+30.5;  
+             /* if(i===0)
+              {
+              totalWidth = totalWidth + d.duration;
+              return 30.5;
+              }
+              else
+              {
+                  totalWidth = totalWidth + d.duration + barPadding;*/
+                  return 30.5 + totalWidth;
+            //  }
           })
           //setting starting point in the y-axis
           .attr("y", function(d) {
