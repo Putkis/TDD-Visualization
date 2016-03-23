@@ -14,12 +14,11 @@ and open the template in the editor.
         fill: none;
         stroke: red;
         shape-rendering: crispEdges;
-        }
-
+        };
         .axis text {
           font-family: sans-serif;
           font-size: 11px;
-        }
+        };
     </style>
     <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="d3.legend.js"></script>
@@ -34,7 +33,8 @@ and open the template in the editor.
         var svgWidth = 1000;
         var padding = 30;
         var previousWidth = 0;
-        var barPadding = 40;
+        var barPadding = 30;
+        var totalWidth = 0;
         
         //Initializing needed variables, like scales,axises and svgs.
         var svg = d3.select("body")
@@ -67,7 +67,7 @@ and open the template in the editor.
         //Creating new data format to being able to parse the data.
         d3.csv("bar-data.csv", function(error, data){
           data.forEach(function(d) {
-            d.duration = d.Duration;
+            d.duration = d.Duration / 6;
             d.action = d.Action;
           });
           
@@ -85,18 +85,22 @@ and open the template in the editor.
           .enter()
           .append("rect")
           //setting starting point in the x-axis
-          .attr("x", function(d, i) {
-            return 300;
+          .attr("x", function(d,i) {
+              //return 7 + barPadding + d.duration;
+              return i * (svgWidth / data.length)+30.5;  
           })
           //setting starting point in the y-axis
           .attr("y", function(d) {
-            return 300;
+            return svgHeigth -d.duration - 25;
           })
           //setting width of the bar
-          .attr("width", function(d){return svgWidth / d.duration; })
+          .attr("width", function(d)
+          {
+              return d.duration; 
+          })
           //setting height of the bar
-          .attr("height", function(d) {
-            return d.duration * 3;
+          .attr("height", function(d,i) {
+              return d.duration;
           })
           //setting colour of the bar
           .attr("fill", function(d) {
@@ -119,7 +123,9 @@ and open the template in the editor.
                 else
                   return "rgb(0, 0, 204)";
           })
-          .on("click", function() {
+          
+          //Showing more information of specific bar (in future) when clicked.
+          /*rect*/.on("click", function() {
             svgInfo.selectAll("text")
             .data(data)
             .enter()
@@ -127,8 +133,8 @@ and open the template in the editor.
             .text(function(d) {
               return d.action;
             })
-            .attr("y", function(d){
-              return d.duration;
+            .attr("y", function(d,i){
+              return i*70;
             })
             .style("font-size","25px");
           });
@@ -144,14 +150,16 @@ and open the template in the editor.
           })
           .attr("y", function(d) {
             return h - (d * 4);
-          })
+          });
         
-        // draw legend for colored rectangles
+         // draw squares for the legend    
         legend.selectAll('rect')
             .data(data)
             .enter()
             .append("rect")
+            //setting where legends square starts for legend in x-axis
             .attr("x", svgWidth - 965)
+            //setting where legends square starts for legend in y-axis
             .attr("y", function(d) 
             {
                 if (d.action === "testLast")
@@ -167,7 +175,9 @@ and open the template in the editor.
                 else
                     return 205;
             })
+            //setting width of the square in the legend
             .attr("width", 30)
+            //setting height of the square in the legend
             .attr("height", 30)
             .style("fill", function(d) {
                 if (d.action === "testLast")
@@ -189,6 +199,7 @@ and open the template in the editor.
                 else
                     return "rgb(0, 0, 204)";
                 });
+        // draw text for the legend       
         legend.selectAll('text')
             .data(data)
             .enter()
@@ -197,7 +208,9 @@ and open the template in the editor.
             {
                 return d.action;
             })
+            //setting where legends text starts for legend in x-axis
             .attr("x",100)
+            //setting where legends text starts for legend in y-axis
             .attr("y", function(d) {
                 if (d.action === "testLast")
                     return 50;
