@@ -65,7 +65,7 @@ and open the template in the editor.
             .ticks(20);
     
         //Creating new data format to being able to parse the data.
-        d3.csv("bar-data.csv", function(error, data){
+        d3.json("secondJSON.json", function(error, data){
           data.forEach(function(d) {
             d.duration = d.Duration / 6;
             d.action = d.Action;
@@ -94,7 +94,7 @@ and open the template in the editor.
               else
               {
                   totalWidth = totalWidth + d.duration + barPadding;*/
-                  return 30.5 + totalWidth;
+                  return 30.5 + d.Duration;
             //  }
           })
           //setting starting point in the y-axis
@@ -133,7 +133,7 @@ and open the template in the editor.
           })
           
           //Showing more information of specific bar (in future) when clicked.
-          /*rect*/.on("click", function() {
+            .on("click", function() {
             svgInfo.selectAll("text")
             .data(data)
             .enter()
