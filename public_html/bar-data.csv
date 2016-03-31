@@ -14,3 +14,5 @@ Timestamp,Action,Subtype,Duration,Flag
 1385726595514,testFirst,3,1233,true
 1385726718667,refactoring,2B,123,true
 1385726855824,codeProduction,2B,137,true
+1385723915159,testAddition,2,390,true
+1385723524392,regression,1,42,true
