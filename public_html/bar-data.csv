@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Timestamp,Action,Subtype,Duration,Flag
 1385723524392,regression,1,42,true
 1385723915159,testAddition,2,390,true
@@ -14,3 +15,10 @@ Timestamp,Action,Subtype,Duration,Flag
 1385726595514,testFirst,3,1233,true
 1385726718667,refactoring,2B,123,true
 1385726855824,codeProduction,2B,137,true
+1385723915159,testAddition,2,390,true
+1385723524392,regression,1,42,true
+=======
+Timestamp,Action,Subtype,Duration,Flag
+1385723915159,testAddition,2,390,true
+1385723524392,regression,1,42,true
+>>>>>>> 42b83dc54bba82c6ecbd26d05253a6c58fd7a978
