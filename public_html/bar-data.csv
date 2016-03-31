@@ -1,3 +1,3 @@
 Timestamp,Action,Subtype,Duration,Flag
-1385723524392,regression,1,42,true
 1385723915159,testAddition,2,390,true
+1385723524392,regression,1,42,true
