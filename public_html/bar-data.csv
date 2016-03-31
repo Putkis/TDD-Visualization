@@ -1,3 +1,22 @@
+<<<<<<< HEAD
 Timestamp,Action,Subtype,Duration,Flag
 1385723915159,testAddition,2,390,true
 1385723524392,regression,1,42,true
+=======
+Timestamp,Action,Subtype,Duration,Flag
+1385723524392,regression,1,42,true
+1385723915159,testAddition,2,390,true
+1385723524392,regression,1,42,true
+1385723915159,testLast,2,390,true
+1385724008786,testAddition,1,93,true
+1385724019818,regression,1,11,true
+1385724532695,testAddition,2,512,true
+1385724699934,testLast,2,167,true
+1385724887513,testAddition,2,187,true
+1385725246062,codeProduction,2,358,true
+1385725330987,refactoring,1A,84,true
+1385725361816,refactoring,1A,30,true
+1385726595514,testFirst,3,1233,true
+1385726718667,refactoring,2B,123,true
+1385726855824,codeProduction,2B,137,true
+>>>>>>> refs/remotes/origin/master
