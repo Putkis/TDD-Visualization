@@ -4,6 +4,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+
 <html lang="en">
 
 <head>
@@ -23,9 +24,9 @@ and open the template in the editor.
     }
   </style>
   <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
-  <script src="d3.legend.js"></script>
+  <script src="Counter.js"></script>
 </head>
-<input id="clickMe" type="button" value="Generate More JSON" onclick="generateJSON();" />
+
 <body>
   <script type="text/javascript">
     var dataset = [
@@ -57,7 +58,8 @@ and open the template in the editor.
       ["Passing Tests: 2", 4],
       ["Failing Tests: 0", 5]
     ];
-    var jsonData = "secondJSON.json";
+    
+    var url = "http://localhost:3000/db";
     var svgHeigth = 400;
     var svgWidth = 1000;
     var padding = 30;
@@ -90,7 +92,7 @@ and open the template in the editor.
       .orient("left")
       .ticks(20);
 
-    d3.json(jsonData, function(error, data) {
+    d3.json(url, function(error, data) {
       data.forEach(function(d) {
         d.duration = d.Duration;
         d.action = d.Action;
@@ -125,6 +127,7 @@ and open the template in the editor.
         .attr("fill", function(d) {
           if (d.Action === "testLast") {
             color = "rgb(204,0,0)";
+            counter.addTestLast();
             return "rgb(204, 0, 0)";
           } else if (d.Action === "testFirst") {
             color = "rgb(0, 204, 0)";
@@ -165,17 +168,7 @@ and open the template in the editor.
           return h - (d * 4);
         });
     });
-    /*svgInfo.selectAll("text")
-      .data(informations)
-      .enter()
-      .append("text")
-      .text(function(d) {
-      return d[0];
-      })
-      .attr("y", function(d){
-      return d[1] * 70;
-      })
-      .style("font-size","25px");*/
+    
     // draw legend colored rectangles
     legend.selectAll('rect')
       .data(dataset)
@@ -238,21 +231,7 @@ and open the template in the editor.
       })
       .style("font-size", "25px");
       
-      document.getElementById("clickMe").onclick = generateJSON();
-      
-    function generateJSON() {
- 
-        var item = [];
-        jsonData.push({ 
-        "TimeStamp" : 1385723524777,
-        "Action"  : "codeProduction",
-        "Subtype" : "1",
-        "Duration" : 42,
-        "Flag" : "true"
-    });
-    };
-    
-    console.log("before " + jsonData.length);
+     counter.getTestLast();
   </script>
 </body>
 
