@@ -28,6 +28,7 @@ and open the template in the editor.
 </head>
 
 <body>
+    <button onclick="generateJSON()">Generate JSON</button>
   <script type="text/javascript">
     var dataset = [
       [5, "testLast", "58%"],
@@ -60,6 +61,7 @@ and open the template in the editor.
     ];
     
     var url = "http://localhost:3000/db";
+    var xmlHttp = new XMLHttpRequest();
     var svgHeigth = 400;
     var svgWidth = 1000;
     var padding = 30;
@@ -110,11 +112,11 @@ and open the template in the editor.
         .enter()
         .append("rect")
         .attr("x", function(d, i) {
-          // return i * (svgWidth / d.length) + 30.5;
+
           return (i * 23) + (d.duration/6); //TODO: replace 30 with the width of the bar
         })
         .attr("y", function(d) {
-          // return svgHeigth - d[3] *6 -25.3;  //Height minus data value
+
           return svgHeigth - (d.duration/3) - 25;
         })
         .attr("width", function(d) {
@@ -122,17 +124,17 @@ and open the template in the editor.
         })
         .attr("height", function(d) {
           return d.duration / 3;
-          // return 80;
+
         })
         .attr("fill", function(d) {
           if (d.Action === "testLast") {
             color = "rgb(204,0,0)";
             counter.addTestLast();
             return "rgb(204, 0, 0)";
-          } else if (d.Action === "testFirst") {
+          } else if (d.Action === "test-first") {
             color = "rgb(0, 204, 0)";
             return "rgb(0, 204, 0)";
-          } else if (d.Action === "testAddition")
+          } else if (d.Action === "test-addition")
             return "rgb(204, 0, 204)";
           else if (d.Action === "regression")
             return "rgb(204, 204, 0)";
@@ -230,8 +232,39 @@ and open the template in the editor.
           return 225;
       })
       .style("font-size", "25px");
-      
-     counter.getTestLast();
+    function generateJSON(){  
+        
+        //Method 1
+        /*
+        function chargeURLPut(url) { 
+        var mimeType = "text/plain";  
+        xmlHttp.open('PUT', "http://localhost:3000/db", true);  // true : asynchrone false: synchrone
+        xmlHttp.setRequestHeader('Content-Type', mimeType);  
+        var data = ("Timestamp: 1385723524392", "Action : regression",    "Subtype: 1",   "Duration: 42","Flag: true");
+        xmlHttp.send(data); 
+        }*/
+        
+        //Method 2
+        /*
+        xhr = new XMLHttpRequest();
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.onreadystatechange = function () { 
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var json = JSON.parse(xhr.responseText);
+                    console.log(json.Timestamp + ", " + json.Action);
+                }
+            };
+        var data = JSON.stringify({"Timestamp":"1385724699111","Action":"test-last"});
+        xhr.send(data);
+        */
+       
+       //Method 3
+       /*
+       var request = require('request');
+       request({ url: url, method: 'PUT', json: {foo: "bar", woo: "car"}}, callback)
+       */
+    }
   </script>
 </body>
 
