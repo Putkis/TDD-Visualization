@@ -61,6 +61,7 @@ and open the template in the editor.
     ];
     
     var url = "http://localhost:3000/db";
+    var json = "firstJSON.json";
     var xmlHttp = new XMLHttpRequest();
     var svgHeigth = 400;
     var svgWidth = 1000;
@@ -234,6 +235,62 @@ and open the template in the editor.
       .style("font-size", "25px");
     function generateJSON(){  
         
+        //tried to update with local data
+        /*
+        d3.json("firstJSON.json", function(error, data) {
+            data.forEach(function(d) {
+                d.duration = d.Duration;
+                d.action = d.Action;
+        });
+        svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(25," + (svgHeigth - padding + 5) + ")")
+        .call(xAxis);
+      svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(" + padding + ",14)")
+        .call(yAxis);
+      svg.selectAll("rect")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("x", function(d, i) {
+
+          return (i * 23) + (d.duration/6); //TODO: replace 30 with the width of the bar
+        })
+        .attr("y", function(d) {
+
+          return svgHeigth - (d.duration/3) - 25;
+        })
+        .attr("width", function(d) {
+          return  d.duration/6;
+        })
+        .attr("height", function(d) {
+          return d.duration / 3;
+
+        })
+        .attr("fill", function(d) {
+          if (d.Action === "testLast") {
+            color = "rgb(204,0,0)";
+            counter.addTestLast();
+            return "rgb(204, 0, 0)";
+          } else if (d.Action === "test-first") {
+            color = "rgb(0, 204, 0)";
+            return "rgb(0, 204, 0)";
+          } else if (d.Action === "test-addition")
+            return "rgb(204, 0, 204)";
+          else if (d.Action === "regression")
+            return "rgb(204, 204, 0)";
+          else if (d.Action === "codeProduction")
+            return "rgb(204, 102, 0)";
+          else
+            return "rgb(0, 0, 204)";
+        })
+        });
+        
+        */
+       
+       
         //Method 1
         /*
         function chargeURLPut(url) { 
