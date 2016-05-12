@@ -28,7 +28,6 @@ and open the template in the editor.
 </head>
 
 <body>
-    <button onclick="generateJSON()">Generate JSON</button>
   <script type="text/javascript">
     var dataset = [
       [5, "testLast", "58%"],
@@ -94,12 +93,7 @@ and open the template in the editor.
       .scale(yScale)
       .orient("left")
       .ticks(20);
-
-    d3.json(url, function(error, data) {
-      data.forEach(function(d) {
-        d.duration = d.Duration;
-        d.action = d.Action;
-      });
+               
       svg.append("g")
         .attr("class", "axis")
         .attr("transform", "translate(25," + (svgHeigth - padding + 5) + ")")
@@ -108,6 +102,17 @@ and open the template in the editor.
         .attr("class", "axis")
         .attr("transform", "translate(" + padding + ",14)")
         .call(yAxis);
+    function newData(){
+        d3.json(url, function(error, data) {
+            data.forEach(function(d) {
+                d.duration = d.Duration;
+                d.action = d.Action;
+            });
+            render(data);
+        })
+    };
+     function render(data){
+
       svg.selectAll("rect")
         .data(data)
         .enter()
@@ -170,8 +175,7 @@ and open the template in the editor.
         .attr("y", function(d) {
           return h - (d * 4);
         });
-    });
-    
+    };
     // draw legend colored rectangles
     legend.selectAll('rect')
       .data(dataset)
@@ -233,95 +237,10 @@ and open the template in the editor.
           return 225;
       })
       .style("font-size", "25px");
-    function generateJSON(){  
-        
-        //tried to update with local data
-        
-        d3.json("firstJSON.json", function(error, data) {
-            data.forEach(function(d) {
-                d.duration = d.Duration;
-                d.action = d.Action;
-        });
-        svg.append("g")
-        .attr("class", "axis")
-        .attr("transform", "translate(25," + (svgHeigth - padding + 5) + ")")
-        .call(xAxis);
-      svg.append("g")
-        .attr("class", "axis")
-        .attr("transform", "translate(" + padding + ",14)")
-        .call(yAxis);
-      svg.selectAll("rect")
-        .data(data)
-        .enter()
-        .append("rect")
-        .attr("x", function(d, i) {
+    newData();
 
-          return (i * 23) + (d.duration/6); //TODO: replace 30 with the width of the bar
-        })
-        .attr("y", function(d) {
 
-          return svgHeigth - (d.duration/3) - 25;
-        })
-        .attr("width", function(d) {
-          return  d.duration/6;
-        })
-        .attr("height", function(d) {
-          return d.duration / 3;
-
-        })
-        .attr("fill", function(d) {
-          if (d.Action === "testLast") {
-            color = "rgb(204,0,0)";
-            counter.addTestLast();
-            return "rgb(204, 0, 0)";
-          } else if (d.Action === "test-first") {
-            color = "rgb(0, 204, 0)";
-            return "rgb(0, 204, 0)";
-          } else if (d.Action === "test-addition")
-            return "rgb(204, 0, 204)";
-          else if (d.Action === "regression")
-            return "rgb(204, 204, 0)";
-          else if (d.Action === "codeProduction")
-            return "rgb(204, 102, 0)";
-          else
-            return "rgb(0, 0, 204)";
-        });
-        });
-        
-        
-       
-       
-        //Method 1
-        /*
-        function chargeURLPut(url) { 
-        var mimeType = "text/plain";  
-        xmlHttp.open('PUT', "http://localhost:3000/db", true);  // true : asynchrone false: synchrone
-        xmlHttp.setRequestHeader('Content-Type', mimeType);  
-        var data = ("Timestamp: 1385723524392", "Action : regression",    "Subtype: 1",   "Duration: 42","Flag: true");
-        xmlHttp.send(data); 
-        }*/
-        
-        //Method 2
-        /*
-        xhr = new XMLHttpRequest();
-            xhr.open("POST", url, true);
-            xhr.setRequestHeader("Content-type", "application/json");
-            xhr.onreadystatechange = function () { 
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    var json = JSON.parse(xhr.responseText);
-                    console.log(json.Timestamp + ", " + json.Action);
-                }
-            };
-        var data = JSON.stringify({"Timestamp":"1385724699111","Action":"test-last"});
-        xhr.send(data);
-        */
-       
-       //Method 3
-       /*
-       var request = require('request');
-       request({ url: url, method: 'PUT', json: {TimeStamp: "1385724699111", "Action":"test-last"}}, callback)
-       */
-    }
+    setInterval(newData, 2000);
   </script>
 </body>
 
