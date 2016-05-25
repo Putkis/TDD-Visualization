@@ -40,10 +40,11 @@ and open the template in the editor.
     
     //defining the URL where data is fetched from
     var url = "http://localhost:3000/db";
-
+    var numberOfActions = 0;
+    var wholeDuration = 0;
     //defining the widhts and heigths for all the SVGs
-    var svgHeigth = 400;
-    var svgWidth = 1000;
+    var svgHeigth = 500;
+    var svgWidth = 800;
     
     //The paddings for the borders
     var padding = 30;
@@ -61,25 +62,25 @@ and open the template in the editor.
     //to graphs
     var svgInfo = d3.select("body")
       .append("svg")
-      .attr("width", svgWidth - 300)
+      .attr("width", svgWidth)
       .attr("height", svgHeigth);
     
     //creating the legend, which contains the needed infomartion to read the 
     //graphs
     var legend = d3.select("body")
       .append("svg")
-      .attr("width", svgWidth - 500)
+      .attr("width", svgWidth)
       .attr("height", svgHeigth);
     
     //creating the X-scale, which scales the given data to needed range
     var xScale = d3.scale.linear()
       .domain([0, 240])
-      .range([5, 965]);
+      .range([0, svgWidth -50]);
     
     //creating the Y-scale, which scales the given data to needed range
     var yScale = d3.scale.linear()
       .domain([100, 0])
-      .range([0, 360]);
+      .range([0, svgHeigth - 40]);
     
     //creating the X-Axis
     var xAxis = d3.svg.axis()
@@ -92,7 +93,18 @@ and open the template in the editor.
       .scale(yScale)
       .orient("left")
       .ticks(20);
-     
+      
+    //creating the d3 line which will be rendered later on
+    var valueline = d3.svg.line()
+            .x(function(d) { 
+                console.log("valueline gives us value of x: " + d.duration);
+                return (d.duration); 
+            })
+            .y(function(d) {
+                console.log("valueline gives us value of y: " + numberOfActions);
+                return (numberOfActions); 
+            });  
+    
     //Rendering the X-axis to first SVG
       svg.append("g")
         .attr("class", "axis")
@@ -112,15 +124,19 @@ and open the template in the editor.
             data.forEach(function(d) {
                 d.duration = d.Duration;
                 d.action = d.Action;
+                
+                
             });
-            console.log("datan luontia kutsuttu");
-            render(data);
+            numberOfActions = numberOfActions +1;
+            console.log("datan creation called");
+            renderLineChart(data);
             drawLegend(data);
+           
         });
     };
     
     //Function that Renders the bars to the first SVG
-     function render(data){
+    /* function renderBars(data){
          
       //selecting the right avg and giving it the needed information to render 
       //the bars in the right way.
@@ -128,13 +144,15 @@ and open the template in the editor.
         .data(data)
         .enter()
         .append("rect")
+        
         //starting x-point of the bar
         .attr("x", function(d, i) {
-          return (i * 23) + (d.duration/6); /*TODO: replace 30 with the width of the bar*/
+          return (i * 23) + (d.duration/6); //TODO: replace 30 with the width of the bar
         })
         //starting y-point of the bar
         .attr("y", function(d) {
           return svgHeigth - (d.duration/3) - 25;
+            
         })
         
         .attr("width", function(d) {
@@ -162,8 +180,9 @@ and open the template in the editor.
             return "rgb(204, 102, 0)";
           else
             return "rgb(0, 0, 204)";
+             
         });
-        /*.on("click", function() {
+        .on("click", function() {
           svgInfo.selectAll("text")
             .data()
             .enter()
@@ -188,9 +207,27 @@ and open the template in the editor.
         })
         .attr("y", function(d) {
           return h - (d * 4);
-        });*/
+        });
+        
     };  
-    
+    */
+   
+    function renderLineChart(data){
+    // Add the valueline path.
+    svg.append("path")
+      .datum(data)
+      .attr("class", "line")
+      .attr("d", valueline(data));
+
+    }
+   
+   
+   
+   
+   
+   
+   
+   
     // draw legend colored rectangles
     function drawLegend(data){
     
