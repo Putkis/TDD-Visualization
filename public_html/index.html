@@ -7,167 +7,267 @@ and open the template in the editor.
 
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <title>Zorro Episode Visualization</title>
-  <style>
-    .axis path,
-    .axis line {
-      fill: none;
-      stroke: red;
-      shape-rendering: crispEdges;
-    }
+  <head>
+    <meta charset="utf-8">
+    <title>Zorro Episode Visualization</title>
+    <style>
+      .axis path,
+      .axis line {
+        fill: none;
+        stroke: red;
+        shape-rendering: crispEdges;
+      }
 
-    .axis text {
-      font-family: sans-serif;
-      font-size: 11px;
-    }
-  </style>
-  <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
-  <script src="Counter.js"></script>
-</head>
+      .axis text {
+        font-family: sans-serif;
+        font-size: 11px;
+      }
+      .line {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 1.5px;
 
-<body>
-  <script type="text/javascript">
+      }
+    </style>
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="Counter.js"></script>
+  </head>
 
-    var informations = [
-      ["Data Coverage: 54%", 1],
-      ["Number of actions: 65", 2],
-      ["Time Taken: 122", 3],
-      ["Passing Tests: 2", 4],
-      ["Failing Tests: 0", 5]
-    ];
-    
-    //defining the URL where data is fetched from
-    var url = "http://localhost:3000/db";
-    var numberOfActions = 0;
-    var wholeDuration = 0;
-    //defining the widhts and heigths for all the SVGs
-    var svgHeigth = 500;
-    var svgWidth = 800;
-    
-    //The paddings for the borders
-    var padding = 30;
-    
-    //padding for the bars
-    var barPadding = 40;
-    
-    //creating the first svg, which contains the graphs
-    var svg = d3.select("body")
+  <body>
+    <script type="text/javascript">
+
+      var informations = [
+        ["Data Coverage: 54%", 1],
+        ["Number of actions: 65", 2],
+        ["Time Taken: 122", 3],
+        ["Passing Tests: 2", 4],
+        ["Failing Tests: 0", 5]
+      ];
+
+      //defining the URL where data is fetched from
+      var url = "http://localhost:3000/db";
+      var numberOfActions = 0;
+      var wholeDuration = 0;
+      //defining the widhts and heigths for all the SVGs
+      var svgHeigth = 500;
+      var svgWidth = 800;
+
+      //The paddings for the borders
+      var padding = 30;
+
+      //padding for the bars
+      var barPadding = 40;
+
+      //creating the first svg, which contains the graphs
+      var svg = d3.select("body")
       .append("svg")
       .attr("width", svgWidth)
       .attr("height", svgHeigth);
-      
-    //creating the second svg, which contains the additional information 
-    //to graphs
-    var svgInfo = d3.select("body")
+
+      //creating the second svg, which contains the additional information
+      //to graphs
+      var svgInfo = d3.select("body")
       .append("svg")
       .attr("width", svgWidth)
       .attr("height", svgHeigth);
-    
-    //creating the legend, which contains the needed infomartion to read the 
-    //graphs
-    var legend = d3.select("body")
+
+      //creating the legend, which contains the needed infomartion to read the
+      //graphs
+      var legend = d3.select("body")
       .append("svg")
       .attr("width", svgWidth)
       .attr("height", svgHeigth);
-    
-    //creating the X-scale, which scales the given data to needed range
-    var xScale = d3.scale.linear()
+
+      //creating the X-scale, which scales the given data to needed range
+      var xScale = d3.scale.linear()
       .domain([0, 240])
       .range([0, svgWidth -50]);
-    
-    //creating the Y-scale, which scales the given data to needed range
-    var yScale = d3.scale.linear()
+
+      //creating the Y-scale, which scales the given data to needed range
+      var yScale = d3.scale.linear()
       .domain([100, 0])
       .range([0, svgHeigth - 40]);
-    
-    //creating the X-Axis
-    var xAxis = d3.svg.axis()
+
+      //creating the X-Axis
+      var xAxis = d3.svg.axis()
       .scale(xScale)
       .orient("bottom")
       .ticks(20);
-     
-    //creating the Y-Axis
-    var yAxis = d3.svg.axis()
+
+      //creating the Y-Axis
+      var yAxis = d3.svg.axis()
       .scale(yScale)
       .orient("left")
       .ticks(20);
-      
-    //creating the d3 line which will be rendered later on
-    var valueline = d3.svg.line()
-            .x(function(d) { 
-                console.log("valueline gives us value of x: " + d.duration);
-                return (d.duration); 
-            })
-            .y(function(d) {
-                console.log("valueline gives us value of y: " + numberOfActions);
-                return (numberOfActions); 
-            });  
-    
-    //Rendering the X-axis to first SVG
-      svg.append("g")
-        .attr("class", "axis")
-        .attr("transform", "translate(25," + (svgHeigth - padding + 5) + ")")
-        .call(xAxis);
 
-     //Rendering the Y-axis to first SVG
-      svg.append("g")
-        .attr("class", "axis")
-        .attr("transform", "translate(" + padding + ",14)")
-        .call(yAxis);
+      //creating the d3 line which will be rendered later on
+      var valueline = d3.svg.line()
+      .x(function(d) {
+        console.log("valueline gives us value of x: " + d.duration);
+        return (d.duration);
+      })
+      .y(function(d) {
+        console.log("valueline gives us value of y: " + numberOfActions);
+        return (numberOfActions);
+      });
 
-    //Fucntion that gets the data from the JSON-server and transfers it form 
-    //of readable object    
-    function newData(){
+      //Rendering the X-axis to first SVG
+      svg.append("g")
+      .attr("class", "axis")
+      .attr("transform", "translate(25," + (svgHeigth - padding + 5) + ")")
+      .call(xAxis);
+
+      //Rendering the Y-axis to first SVG
+      svg.append("g")
+      .attr("class", "axis")
+      .attr("transform", "translate(" + padding + ",14)")
+      .call(yAxis);
+
+      //Fucntion that gets the data from the JSON-server and transfers it form
+      //of readable object
+      function newData(){
         d3.json(url, function(error, data) {
-            data.forEach(function(d) {
-                d.duration = d.Duration;
-                d.action = d.Action;
-                
-                
-            });
-            numberOfActions = numberOfActions +1;
-            console.log("datan creation called");
-            renderLineChart(data);
-            drawLegend(data);
-           
+          data.forEach(function(d) {
+            d.duration = d.Duration;
+            d.action = d.Action;
+
+
+          });
+          numberOfActions = numberOfActions +1;
+          console.log("datan creation called");
+          renderLineChart(data);
+          drawLegend(data);
+
         });
-    };
-    
-    //Function that Renders the bars to the first SVG
-    /* function renderBars(data){
-         
-      //selecting the right avg and giving it the needed information to render 
-      //the bars in the right way.
-      svg.selectAll("rect")
+      };
+
+      //Function that Renders the bars to the first SVG
+      /* function renderBars(data){
+
+//selecting the right avg and giving it the needed information to render
+//the bars in the right way.
+svg.selectAll("rect")
+.data(data)
+.enter()
+.append("rect")
+
+//starting x-point of the bar
+.attr("x", function(d, i) {
+return (i * 23) + (d.duration/6); //TODO: replace 30 with the width of the bar
+})
+//starting y-point of the bar
+.attr("y", function(d) {
+return svgHeigth - (d.duration/3) - 25;
+
+})
+
+.attr("width", function(d) {
+return  d.duration/6;
+})
+.attr("height", function(d) {
+return d.duration / 3;
+
+})
+
+//colour of the bar
+.attr("fill", function(d) {
+if (d.Action === "testLast") {
+color = "rgb(204,0,0)";
+counter.addTestLast();
+return "rgb(204, 0, 0)";
+} else if (d.Action === "test-first") {
+color = "rgb(0, 204, 0)";
+return "rgb(0, 204, 0)";
+} else if (d.Action === "test-addition")
+return "rgb(204, 0, 204)";
+else if (d.Action === "regression")
+return "rgb(204, 204, 0)";
+else if (d.Action === "codeProduction")
+return "rgb(204, 102, 0)";
+else
+return "rgb(0, 0, 204)";
+
+});
+.on("click", function() {
+svgInfo.selectAll("text")
+.data()
+.enter()
+.append("text")
+.text(function(d) {
+return d[0];
+})
+.attr("y", function(d) {
+return d[1] * 70;
+})
+.style("font-size", "25px");
+});
+svg.selectAll("text")
+.data(data)
+.enter()
+.append("text")
+.text(function(d) {
+return d;
+})
+.attr("x", function(d, i) {
+return i * (w / dataset.length);
+})
+.attr("y", function(d) {
+return h - (d * 4);
+});
+
+};
+*/
+
+function renderLineChart(data){
+  // Add the valueline path.
+  svg.append("path")
+    .data(data)
+    .attr("class", "line")
+    .attr("d", valueline(data));
+}
+
+
+
+
+
+
+
+
+      // draw legend colored rectangles
+      function drawLegend(data){
+
+        //selecting the right avg and giving it the needed information to render
+        //the legend in the right way.
+        legend.selectAll('rect')
         .data(data)
         .enter()
         .append("rect")
-        
-        //starting x-point of the bar
-        .attr("x", function(d, i) {
-          return (i * 23) + (d.duration/6); //TODO: replace 30 with the width of the bar
-        })
-        //starting y-point of the bar
-        .attr("y", function(d) {
-          return svgHeigth - (d.duration/3) - 25;
-            
-        })
-        
-        .attr("width", function(d) {
-          return  d.duration/6;
-        })
-        .attr("height", function(d) {
-          return d.duration / 3;
 
+        //giving the starting coordinates for each square in the legend
+        .attr("x", svgWidth - 965)
+        .attr("y", function(d) {
+          if (d.Action === "testLast")
+            return 30;
+          else if (d.Action === "test-first")
+            return 65;
+          else if (d.Action === "test-addition")
+            return 100;
+          else if (d.Action === "regression")
+            return 135;
+          else if (d.Action === "codeProduction")
+            return 170;
+          else
+            return 205;
         })
-        
-        //colour of the bar
-        .attr("fill", function(d) {
+
+        //giving the size of the square
+        .attr("width", 30)
+        .attr("height", 30)
+
+        //giving the colour of the square
+        .style("fill", function(d) {
           if (d.Action === "testLast") {
             color = "rgb(204,0,0)";
-            counter.addTestLast();
             return "rgb(204, 0, 0)";
           } else if (d.Action === "test-first") {
             color = "rgb(0, 204, 0)";
@@ -180,137 +280,42 @@ and open the template in the editor.
             return "rgb(204, 102, 0)";
           else
             return "rgb(0, 0, 204)";
-             
         });
-        .on("click", function() {
-          svgInfo.selectAll("text")
-            .data()
-            .enter()
-            .append("text")
-            .text(function(d) {
-              return d[0];
-            })
-            .attr("y", function(d) {
-              return d[1] * 70;
-            })
-            .style("font-size", "25px");
-        });
-      svg.selectAll("text")
+
+        //Writing the text in the legend.
+        legend.selectAll('text')
         .data(data)
         .enter()
         .append("text")
-        .text(function(d) {
-          return d;
-        })
-        .attr("x", function(d, i) {
-          return i * (w / dataset.length);
-        })
-        .attr("y", function(d) {
-          return h - (d * 4);
-        });
-        
-    };  
-    */
-   
-    function renderLineChart(data){
-    // Add the valueline path.
-    svg.append("path")
-      .datum(data)
-      .attr("class", "line")
-      .attr("d", valueline(data));
 
-    }
-   
-   
-   
-   
-   
-   
-   
-   
-    // draw legend colored rectangles
-    function drawLegend(data){
-    
-    //selecting the right avg and giving it the needed information to render 
-    //the legend in the right way.
-    legend.selectAll('rect')
-      .data(data)
-      .enter()
-      .append("rect")
-      
-      //giving the starting coordinates for each square in the legend
-      .attr("x", svgWidth - 965)
-      .attr("y", function(d) {
-        if (d.Action === "testLast")
-          return 30;
-        else if (d.Action === "test-first")
-          return 65;
-        else if (d.Action === "test-addition")
-          return 100;
-        else if (d.Action === "regression")
-          return 135;
-        else if (d.Action === "codeProduction")
-          return 170;
-        else
-          return 205;
-      })
-      
-      //giving the size of the square
-      .attr("width", 30)
-      .attr("height", 30)
-      
-      //giving the colour of the square
-      .style("fill", function(d) {
-        if (d.Action === "testLast") {
-          color = "rgb(204,0,0)";
-          return "rgb(204, 0, 0)";
-        } else if (d.Action === "test-first") {
-          color = "rgb(0, 204, 0)";
-          return "rgb(0, 204, 0)";
-        } else if (d.Action === "test-addition")
-          return "rgb(204, 0, 204)";
-        else if (d.Action === "regression")
-          return "rgb(204, 204, 0)";
-        else if (d.Action === "codeProduction")
-          return "rgb(204, 102, 0)";
-        else
-          return "rgb(0, 0, 204)";
-      });
-      
-     //Writing the text in the legend. 
-    legend.selectAll('text')
-      .data(data)
-      .enter()
-      .append("text")
-      
-      //what text contains
-      .text(function(d) {
-        return d.Action;
-      })
-      
-      //starting coordinates of the text
-      .attr("x", 100)
-      .attr("y", function(d) {
-        if (d.Action === "testLast")
-          return 50;
-        else if (d.Action === "test-first")
-          return 85;
-        else if (d.Action === "test-addition")
-          return 120;
-        else if (d.Action === "regression")
-          return 155;
-        else if (d.Action === "codeProduction")
-          return 190;
-        else
-          return 225;
-      })
-  
-      .style("font-size", "25px");
-    }; 
-    newData();
-    setInterval(newData, 2000);
-  </script>
-</body>
+        //what text contains
+        .text(function(d) {
+          return d.Action;
+        })
+
+        //starting coordinates of the text
+        .attr("x", 100)
+        .attr("y", function(d) {
+          if (d.Action === "testLast")
+            return 50;
+          else if (d.Action === "test-first")
+            return 85;
+          else if (d.Action === "test-addition")
+            return 120;
+          else if (d.Action === "regression")
+            return 155;
+          else if (d.Action === "codeProduction")
+            return 190;
+          else
+            return 225;
+        })
+
+        .style("font-size", "25px");
+      };
+      newData();
+      setInterval(newData, 2000);
+    </script>
+  </body>
 
 </html>
 
