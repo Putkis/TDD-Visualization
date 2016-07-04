@@ -34,8 +34,9 @@ and open the template in the editor.
   </head>
 
   <body>
+        <button id="myButton" class="float-left submit-button" >line Chart</button>
     <script type="text/javascript">
-
+      
       var informations = [
         ["Data Coverage: 54%", 1],
         ["Number of actions: 65", 2],
@@ -43,10 +44,17 @@ and open the template in the editor.
         ["Passing Tests: 2", 4],
         ["Failing Tests: 0", 5]
       ];
-
+      var barData = [["test-last",numberOfTestLasts],["test-first",numberOftestFirsts],
+                     ["test-addition",numberOftestAdditions],["regression",numberOfRegressions],
+                     ["codeProduction",numberOfCodeProductions],["refactoring",numberOfRefactorings]];
       //defining the URL where data is fetched from
       var url = "http://localhost:3000/db";
-      var numberOfActions = 0;
+      var numberOfTestLasts = 0;
+      var numberOftestFirsts = 0;
+      var numberOftestAdditions = 0;
+      var numberOfRegressions = 0;
+      var numberOfCodeProductions = 0;
+      var numberOfRefactorings = 0;
       var wholeDuration = 0;
       //defining the widhts and heigths for all the SVGs
       var svgHeigth = 500;
@@ -85,8 +93,8 @@ and open the template in the editor.
 
       //creating the Y-scale, which scales the given data to needed range
       var yScale = d3.scale.linear()
-      .domain([100, 0])
-      .range([0, svgHeigth - 40]);
+      .domain([65, 0])
+      .range([0,svgHeigth -40]);
 
       //creating the X-Axis
       var xAxis = d3.svg.axis()
@@ -98,7 +106,7 @@ and open the template in the editor.
       var yAxis = d3.svg.axis()
       .scale(yScale)
       .orient("left")
-      .ticks(20);
+      .ticks(30);
 
       //creating the d3 line which will be rendered later on
       var valueline = d3.svg.line()
@@ -128,21 +136,30 @@ and open the template in the editor.
       function newData(){
         d3.json(url, function(error, data) {
           data.forEach(function(d) {
-            d.duration = d.Duration;
-            d.action = d.Action;
-
-
+            if (d.Action === "test-last") {
+                numberOfTestLasts += 1;
+            }else if (d.Action === "test-first")
+                       numberOftestFirsts +=1;
+                    else if (d.Action === "test-addition")
+                               numberOftestAdditions +=1;
+                           else if (d.Action === "regression")
+                                    numberOfRegressions +=1;
+                                else if (d.Action === "codeProduction")
+                                          numberOfCodeProductions;
+                                    else
+                                        numberOfRefactorings +=1;
+          d.action = d.Action;
           });
-          numberOfActions = numberOfActions +1;
+          
           console.log("datan creation called");
-          renderLineChart(data);
+          renderBars(barData);
           drawLegend(data);
-
+          resetCounters(data);
         });
       };
 
       //Function that Renders the bars to the first SVG
-      /* function renderBars(data){
+       function renderBars(data){
 
 //selecting the right avg and giving it the needed information to render
 //the bars in the right way.
@@ -153,42 +170,64 @@ svg.selectAll("rect")
 
 //starting x-point of the bar
 .attr("x", function(d, i) {
-return (i * 23) + (d.duration/6); //TODO: replace 30 with the width of the bar
+return i * (svgWidth / 6) + 30; //TODO: replace 30 with the width of the bar
 })
 //starting y-point of the bar
 .attr("y", function(d) {
-return svgHeigth - (d.duration/3) - 25;
+ if (d[0] === "test-last") {
+    return 475 - numberOfTestLasts;
+ }else if (d[0] === "test-first")
+          return 475 - numberOftestFirsts;
+       else if (d[0] === "test-addition")
+                return 475 - numberOftestAdditions;
+            else if (d[0] === "regression")
+                    return 475 - numberOfRegressions;
+                 else if (d[0] === "codeProduction")
+                         return 475 - numberOfCodeProductions;
+                      else
+                         return 475 - numberOfRefactorings;
 
 })
 
 .attr("width", function(d) {
-return  d.duration/6;
+return  svgWidth/6;
 })
 .attr("height", function(d) {
-return d.duration / 3;
+if (d[0] === "test-last") {
+    return numberOfTestLasts;
+ }else if (d[0] === "test-first")
+          return numberOftestFirsts;
+       else if (d[0] === "test-addition")
+                return numberOftestAdditions;
+            else if (d[0] === "regression")
+                    return numberOfRegressions;
+                 else if (d[0] === "codeProduction")
+                         return numberOfCodeProductions;
+                      else
+                         return numberOfRefactorings;
 
 })
 
 //colour of the bar
 .attr("fill", function(d) {
-if (d.Action === "testLast") {
+if (d[0] === "test-last") {
 color = "rgb(204,0,0)";
 counter.addTestLast();
 return "rgb(204, 0, 0)";
-} else if (d.Action === "test-first") {
+} else if (d[0] === "test-first") {
 color = "rgb(0, 204, 0)";
 return "rgb(0, 204, 0)";
-} else if (d.Action === "test-addition")
+} else if (d[0] === "test-addition")
 return "rgb(204, 0, 204)";
-else if (d.Action === "regression")
+else if (d[0] === "regression")
 return "rgb(204, 204, 0)";
-else if (d.Action === "codeProduction")
+else if (d[0] === "codeProduction")
 return "rgb(204, 102, 0)";
 else
 return "rgb(0, 0, 204)";
 
 });
-.on("click", function() {
+/*.on("click", function() {
 svgInfo.selectAll("text")
 .data()
 .enter()
@@ -200,7 +239,7 @@ return d[0];
 return d[1] * 70;
 })
 .style("font-size", "25px");
-});
+});*/
 svg.selectAll("text")
 .data(data)
 .enter()
@@ -209,14 +248,14 @@ svg.selectAll("text")
 return d;
 })
 .attr("x", function(d, i) {
-return i * (w / dataset.length);
+return i * (svgWidth / 6);
 })
 .attr("y", function(d) {
 return h - (d * 4);
 });
 
 };
-*/
+
 
 function renderLineChart(data){
   // Add the valueline path.
@@ -226,6 +265,14 @@ function renderLineChart(data){
     .attr("d", valueline(data));
 }
 
+function resetCounters(data){
+      numberOfTestLasts = 0;
+      numberOftestFirsts = 0;
+      numberOftestAdditions = 0;
+      numberOfRegressions = 0;
+      numberOfCodeProductions = 0;
+      numberOfRefactorings = 0;
+}
 
 
 
@@ -311,6 +358,10 @@ function renderLineChart(data){
         })
 
         .style("font-size", "25px");
+      };
+      
+      document.getElementById("myButton").onclick = function () {
+        location.href = "http://localhost:8383/TDD-Visualization/lineChart.html";
       };
       newData();
       setInterval(newData, 2000);
