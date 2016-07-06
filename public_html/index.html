@@ -36,7 +36,7 @@ and open the template in the editor.
   <body>
         <button id="myButton" class="float-left submit-button" >line Chart</button>
     <script type="text/javascript">
-      
+
       var informations = [
         ["Data Coverage: 54%", 1],
         ["Number of actions: 65", 2],
@@ -150,7 +150,7 @@ and open the template in the editor.
                                         numberOfRefactorings +=1;
           d.action = d.Action;
           });
-          
+
           console.log("datan creation called");
           renderBars(barData);
           drawLegend(data);
@@ -359,9 +359,9 @@ function resetCounters(data){
 
         .style("font-size", "25px");
       };
-      
+
       document.getElementById("myButton").onclick = function () {
-        location.href = "http://localhost:8383/TDD-Visualization/lineChart.html";
+        location.href = "lineChart.html";
       };
       newData();
       setInterval(newData, 2000);
