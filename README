@@ -1,0 +1,20 @@
+Introduction for the project:
+
+1. NPM
+  1.1 Test: Run node -v. The version should be higher than v0.10.32.
+  1.2 Node comes with npm installed so you should have a version of npm. 
+      However, npm gets updated more frequently than Node does, 
+      so you'll want to make sure it's the latest version.npm 
+      install npm -g
+  1.3 after that t should be fine.
+  
+2. JSON- server
+  2.1 Clone this project. https://github.com/typicode/json-server
+  2.1 start server with $ json-server --watch firstJSON.json
+  2.2 ALSO can be installed with NPM  npm install -g json-server
+  
+3. Last thing
+  3.1 just go to http://localhost:3000/db
+  3.2 you should see your data
+  3.3 run your visualization and go to website it gives you (for me it is http://localhost:8383/TDD-Visualization/index.html)
+  
