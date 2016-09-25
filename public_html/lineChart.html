@@ -14,7 +14,7 @@ and open the template in the editor.
     .axis path,
     .axis line {
       fill: none;
-      stroke: red;
+      stroke: black;
       shape-rendering: crispEdges;
     }
 
@@ -89,12 +89,16 @@ and open the template in the editor.
     var xAxis = d3.svg.axis()
       .scale(xScale)
       .orient("bottom")
+      .outerTickSize(0)
+      .tickPadding(10)
       .ticks(20);
      
     //creating the Y-Axis
     var yAxis = d3.svg.axis()
       .scale(yScale)
       .orient("left")
+      .outerTickSize(0)
+      .tickPadding(10)
       .ticks(20);
       
     //creating the d3 line which will be rendered later on          
@@ -123,9 +127,7 @@ and open the template in the editor.
                 durations[i]=(d.Duration/60);
             });
             console.log("datan creation called");
-            createMatrix(durations);
-            drawLegend(data);
-           
+            createMatrix(durations);          
         });
     };
     
@@ -150,86 +152,7 @@ and open the template in the editor.
     path.exit().remove()
     };
     
-    // draw legend colored rectangles
-    function drawLegend(data){
-    
-    //selecting the right avg and giving it the needed information to render 
-    //the legend in the right way.
-    legend.selectAll('rect')
-      .data(data)
-      .enter()
-      .append("rect")
-      
-      //giving the starting coordinates for each square in the legend
-      .attr("x",180)
-      .attr("y", function(d) {
-        if (d.Action === "testLast")
-          return 30;
-        else if (d.Action === "test-first")
-          return 65;
-        else if (d.Action === "test-addition")
-          return 100;
-        else if (d.Action === "regression")
-          return 135;
-        else if (d.Action === "codeProduction")
-          return 170;
-        else
-          return 205;
-      })
-      
-      //giving the size of the square
-      .attr("width", 30)
-      .attr("height", 30)
-      
-      //giving the colour of the square
-      .style("fill", function(d) {
-        if (d.Action === "testLast") {
-          color = "rgb(204,0,0)";
-          return "rgb(204, 0, 0)";
-        } else if (d.Action === "test-first") {
-          color = "rgb(0, 204, 0)";
-          return "rgb(0, 204, 0)";
-        } else if (d.Action === "test-addition")
-          return "rgb(204, 0, 204)";
-        else if (d.Action === "regression")
-          return "rgb(204, 204, 0)";
-        else if (d.Action === "codeProduction")
-          return "rgb(204, 102, 0)";
-        else
-          return "rgb(0, 0, 204)";
-      });
-      
-     //Writing the text in the legend. 
-    legend.selectAll('text')
-      .data(data)
-      .enter()
-      .append("text")
-      
-      //what text contains
-      .text(function(d) {
-        return d.Action;
-      })
-      
-      //starting coordinates of the text
-      .attr("x",0)
-      .attr("y", function(d) {
-        if (d.Action === "testLast")
-          return 50;
-        else if (d.Action === "test-first")
-          return 85;
-        else if (d.Action === "test-addition")
-          return 120;
-        else if (d.Action === "regression")
-          return 155;
-        else if (d.Action === "codeProduction")
-          return 190;
-        else
-          return 225;
-      })
-  
-      .style("font-size", "25px");
-    }; 
-    
+
     document.getElementById("myButton").onclick = function () {
         location.href = "http://localhost:8383/TDD-Visualization/index.html";
     };
