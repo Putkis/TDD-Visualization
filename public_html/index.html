@@ -28,18 +28,25 @@ and open the template in the editor.
       }
     </style>
     <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="Counter.js"></script>
   </head>
 
   <body>
         <button id="myButton" class="float-left submit-button" >line Chart</button>
-        <button id="rescale" onclick="rescale();">Rescale</button>
+	<input type="file" id="selectFiles" value="userInput" /><br />
+	<button id="import">Import</button>
     <script type="text/javascript">
       var barData = [["test-last",numberOfTestLasts],["test-first",numberOftestFirsts],
                      ["test-addition",numberOftestAdditions],["regression",numberOfRegressions],
                      ["codeProduction",numberOfCodeProductions],["refactoring",numberOfRefactorings]];
-      //defining the URL where data is fetched from
-      var url = "http://localhost:3000/db";
+document.getElementById("import").onclick = function () {
+    var data = document.getElementById("selectFiles").value;
+	renderBars(data);
+	drawLegend(data);
+	window.alert(data.type);
+	resetCounters(data);
+
+}
+      var data = 0
       var numberOfTestLasts = 0;
       var numberOftestFirsts = 0;
       var numberOftestAdditions = 0;
@@ -106,7 +113,7 @@ and open the template in the editor.
       //Fucntion that gets the data from the JSON-server and transfers it form
       //of readable object
       function newData(){
-        d3.json(url, function(error, data) {
+        d3.json(data, function(error, data) {
           data.forEach(function(d) {
             if (d.Action === "test-last") {
                 numberOfTestLasts += 1;
@@ -208,13 +215,13 @@ function resetCounters(data){
         //giving the starting coordinates for each square in the legend
         .attr("x", svgWidth - 695)
         .attr("y", function(d) {
-          if (d.Action === "test-last")
+          if (d.action === "test-last")
             return 30;
-          else if (d.Action === "test-first")
+          else if (d.action === "test-first")
             return 65;
-          else if (d.Action === "test-addition")
+          else if (d.action === "test-addition")
             return 100;
-          else if (d.Action === "regression")
+          else if (d.action === "regression")
             return 135;
           else if (d.Action === "codeProduction")
             return 170;
@@ -226,15 +233,15 @@ function resetCounters(data){
         .attr("height", 30)
         //giving the colour of the square
         .style("fill", function(d) {
-          if (d.Action === "test-last") {
+          if (d.action === "test-last") {
             return "rgb(139, 0, 0)";
-          } else if (d.Action === "test-first") {
+          } else if (d.action === "test-first") {
             return "rgb(0, 100, 0)";
-          } else if (d.Action === "test-addition")
+          } else if (d.action === "test-addition")
             return "rgb(199, 21, 133)";
-          else if (d.Action === "regression")
+          else if (d.action === "regression")
             return "rgb(255, 140, 0)";
-          else if (d.Action === "codeProduction")
+          else if (d.action === "codeProduction")
             return "rgb(139, 69, 19)";
           else
             return "rgb(106, 90, 205)";
@@ -246,7 +253,7 @@ function resetCounters(data){
         .append("text")
         //what text contains
         .text(function(d) {
-          return d.Action;
+          return d.action;
         })
         //starting coordinates of the text
         .attr("x", 150)
@@ -269,8 +276,8 @@ function resetCounters(data){
       document.getElementById("myButton").onclick = function () {
         location.href = "lineChart.html";
       };
-      newData();
-      setInterval(newData, 2000);
+     // newData();
+     // setInterval(newData, 2000);
       renderAxis();
       
     function renderAxis(){
@@ -286,14 +293,10 @@ function resetCounters(data){
         svg.appendChild(xAxis);
         svg.appendChild(yAxis);
       };
-       function rescale() {
-            yScale.domain([0,Math.floor((Math.random()*90)+11)])  // change scale to 0, to between 10 and 100
-            vis.select(".yaxis")
-                    .transition().duration(1500).ease("sin-in-out")  // https://github.com/mbostock/d3/wiki/Transitions#wiki-d3_ease
-                    .call(yAxis);  
-            vis.select(".yaxis_label")
-                .text("Rescaled Axis");
-        }
+	  document.getElementById("myButton").onclick = function () {
+        location.href = "lineChart.html";
+		};
+	  
     </script>
   </body>
 
