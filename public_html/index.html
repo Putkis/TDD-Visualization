@@ -27,25 +27,38 @@ and open the template in the editor.
         stroke-width: 1.5px;
       }
     </style>
-    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script
   </head>
 
   <body>
         <button id="myButton" class="float-left submit-button" >line Chart</button>
-	<input type="file" id="selectFiles" value="userInput" /><br />
+	<input type="file" id="selectFiles" value="Import" /><br />
 	<button id="import">Import</button>
     <script type="text/javascript">
       var barData = [["test-last",numberOfTestLasts],["test-first",numberOftestFirsts],
                      ["test-addition",numberOftestAdditions],["regression",numberOfRegressions],
                      ["codeProduction",numberOfCodeProductions],["refactoring",numberOfRefactorings]];
-document.getElementById("import").onclick = function () {
-    var data = document.getElementById("selectFiles").value;
-	renderBars(data);
-	drawLegend(data);
-	window.alert(data.type);
-	resetCounters(data);
-
-}
+	 var reader = new FileReader();
+	 var formatted = 0;
+	
+	document.getElementById('import').onclick = function() {
+	var files = document.getElementById('selectFiles').files;
+	console.log(files);
+	if (files.length <= 0) {
+		return false;
+	}
+  
+	var fr = new FileReader();
+  
+	fr.onload = function(e) { 
+		console.log(e);
+		var result = JSON.parse(e.target.result);
+		formatted = JSON.stringify(result, null, 2);
+		window.alert(formatted);
+	}
+	newData(formatted);
+	fr.readAsText(files.item(0));
+	};
       var data = 0
       var numberOfTestLasts = 0;
       var numberOftestFirsts = 0;
