@@ -53,6 +53,7 @@ and open the template in the editor.
 	fr.onload = function(e) { 
 		console.log(e);
 		var result = JSON.parse(e.target.result);
+		//JSON content is in the FORMATTED variable. Using that as data gives FORBIDDEN
 		formatted = JSON.stringify(result, null, 2);
 		window.alert(formatted);
 	}
