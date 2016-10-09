@@ -1,61 +1,23 @@
 0 info it worked if it ends with ok
 1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
-1 verbose cli   'C:\\Users\\Putkis\\=\\node_modules\\npm\\bin\\npm-cli.js',
-1 verbose cli   'install',
-1 verbose cli   '-g',
-1 verbose cli   'json-server' ]
-2 info using npm@3.7.3
+1 verbose cli   'G:\\NetBeans\\Projects\\TDD-Visualization\\public_html\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'start',
+1 verbose cli   'index.html' ]
+2 info using npm@3.10.7
 3 info using node@v4.3.1
-4 silly loadCurrentTree Starting
-5 silly install loadCurrentTree
-6 silly install readGlobalPackageData
-7 silly fetchPackageMetaData json-server
-8 silly fetchOtherPackageData json-server
-9 silly cache add args [ 'json-server', null ]
-10 verbose cache add spec json-server
-11 silly cache add parsed spec Result {
-11 silly cache add   raw: 'json-server',
-11 silly cache add   scope: null,
-11 silly cache add   name: null,
-11 silly cache add   rawSpec: 'json-server',
-11 silly cache add   spec: 'C:\\Users\\Putkis\\=\\json-server',
-11 silly cache add   type: 'local' }
-12 silly addLocalTarball shasum (computed) bd4e85ba2bf0fdbe1ca68568103d1d175cbf286a
-13 verbose addTmpTarball C:\Users\Putkis\=\json-server not in flight; adding
-14 verbose correctMkdir C:\Users\Putkis\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
-15 verbose addTmpTarball validating metadata from C:\Users\Putkis\=\json-server
-16 verbose tar unpack C:\Users\Putkis\=\json-server
-17 verbose tar unpacking to C:\Users\Putkis\AppData\Local\Temp\npm-7020-460361a2\unpack-19828b89
-18 silly gentlyRm C:\Users\Putkis\AppData\Local\Temp\npm-7020-460361a2\unpack-19828b89 is being purged
-19 verbose gentlyRm don't care about contents; nuking C:\Users\Putkis\AppData\Local\Temp\npm-7020-460361a2\unpack-19828b89
-20 silly gunzTarPerm modes [ '777', '666' ]
-21 error not a package C:\Users\Putkis\=\json-server
-22 error addLocal Could not install C:\Users\Putkis\=\json-server
-23 silly fetchPackageMetaData Error: ENOENT: no such file or directory, open 'C:\Users\Putkis\AppData\Local\Temp\npm-7020-460361a2\unpack-19828b89\package.json'
-23 silly fetchPackageMetaData     at Error (native)
-23 silly fetchPackageMetaData  error for json-server { [Error: ENOENT: no such file or directory, open 'C:\Users\Putkis\AppData\Local\Temp\npm-7020-460361a2\unpack-19828b89\package.json']
-23 silly fetchPackageMetaData   errno: -4058,
-23 silly fetchPackageMetaData   code: 'ENOENT',
-23 silly fetchPackageMetaData   syscall: 'open',
-23 silly fetchPackageMetaData   path: 'C:\\Users\\Putkis\\AppData\\Local\\Temp\\npm-7020-460361a2\\unpack-19828b89\\package.json' }
-24 silly rollbackFailedOptional Starting
-25 silly rollbackFailedOptional Finishing
-26 silly runTopLevelLifecycles Starting
-27 silly runTopLevelLifecycles Finishing
-28 silly install printInstalled
-29 verbose stack Error: ENOENT: no such file or directory, open 'C:\Users\Putkis\AppData\Local\Temp\npm-7020-460361a2\unpack-19828b89\package.json'
-29 verbose stack     at Error (native)
-30 verbose cwd C:\Users\Putkis\=
-31 error Windows_NT 6.1.7601
-32 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Users\\Putkis\\=\\node_modules\\npm\\bin\\npm-cli.js" "install" "-g" "json-server"
-33 error node v4.3.1
-34 error npm  v3.7.3
-35 error path C:\Users\Putkis\AppData\Local\Temp\npm-7020-460361a2\unpack-19828b89\package.json
-36 error code ENOENT
-37 error errno -4058
-38 error syscall open
-39 error enoent ENOENT: no such file or directory, open 'C:\Users\Putkis\AppData\Local\Temp\npm-7020-460361a2\unpack-19828b89\package.json'
-40 error enoent ENOENT: no such file or directory, open 'C:\Users\Putkis\AppData\Local\Temp\npm-7020-460361a2\unpack-19828b89\package.json'
-40 error enoent This is most likely not a problem with npm itself
-40 error enoent and is related to npm not being able to find a file.
-41 verbose exit [ -4058, true ]
+4 verbose stack Error: ENOENT: no such file or directory, open 'G:\NetBeans\Projects\TDD-Visualization\public_html\package.json'
+4 verbose stack     at Error (native)
+5 verbose cwd G:\NetBeans\Projects\TDD-Visualization\public_html
+6 error Windows_NT 10.0.10586
+7 error argv "C:\\Program Files\\nodejs\\node.exe" "G:\\NetBeans\\Projects\\TDD-Visualization\\public_html\\node_modules\\npm\\bin\\npm-cli.js" "start" "index.html"
+8 error node v4.3.1
+9 error npm  v3.10.7
+10 error path G:\NetBeans\Projects\TDD-Visualization\public_html\package.json
+11 error code ENOENT
+12 error errno -4058
+13 error syscall open
+14 error enoent ENOENT: no such file or directory, open 'G:\NetBeans\Projects\TDD-Visualization\public_html\package.json'
+15 error enoent ENOENT: no such file or directory, open 'G:\NetBeans\Projects\TDD-Visualization\public_html\package.json'
+15 error enoent This is most likely not a problem with npm itself
+15 error enoent and is related to npm not being able to find a file.
+16 verbose exit [ -4058, true ]
