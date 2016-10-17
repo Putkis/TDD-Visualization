@@ -1,5 +1,6 @@
 [
 {
+<<<<<<< HEAD
 "Timestamp": 1385723524392,
 "Action": "regression",
 "Subtype": "1",
@@ -11,6 +12,19 @@
 "Action": "test-addition",
 "Subtype": "2",
 "Duration": 390,
+=======
+"Timestamp": 1385723524392, 
+"Action": "testLast", 
+"Subtype": "1", 
+"Duration": 42, 
+"Flag": true
+}
+,{
+"Timestamp": 1385723915159, 
+"Action": "test-first", 
+"Subtype": "2", 
+"Duration": 390, 
+>>>>>>> upstream/master
 "Flag": true
 }
 ,{
@@ -28,10 +42,17 @@
 "Flag": true
 }
 ,{
+<<<<<<< HEAD
 "Timestamp": 1385724532695,
 "Action": "test-addition",
 "Subtype": "2",
 "Duration": 512,
+=======
+"Timestamp": 1385724532695, 
+"Action": "regression", 
+"Subtype": "2", 
+"Duration": 512, 
+>>>>>>> upstream/master
 "Flag": true
 }
 ,{
@@ -90,4 +111,238 @@
 "Duration": 937,
 "Flag": true
 }
+<<<<<<< HEAD
 ]
+=======
+,{
+"Timestamp": 1385724532695, 
+"Action": "codeProduction", 
+"Subtype": "2", 
+"Duration": 512, 
+"Flag": true
+}
+,{
+"Timestamp": 1385725246062, 
+"Action": "test-addition", 
+"Subtype": "2", 
+"Duration": 358, 
+"Flag": true
+}
+,{
+"Timestamp": 1385725246062, 
+"Action": "test-addition", 
+"Subtype": "2", 
+"Duration": 358, 
+"Flag": true
+}
+,{
+"Timestamp": 1385726595514, 
+"Action": "test-first", 
+"Subtype": "3", 
+"Duration": 1233, 
+"Flag": true
+}
+,{
+"Timestamp": 1385726718667, 
+"Action": "refactoring", 
+"Subtype": "2B", 
+"Duration": 123, 
+"Flag": true
+}
+,{
+"Timestamp": 1385723915159, 
+"Action": "test-last", 
+"Subtype": "2", 
+"Duration": 390, 
+"Flag": true
+}
+,{
+"Timestamp": 1385724008786, 
+"Action": "test-first", 
+"Subtype": "1", 
+"Duration": 93, 
+"Flag": true
+}
+,{
+"Timestamp": 1385724019818, 
+"Action": "regression", 
+"Subtype": "1", 
+"Duration": 11, 
+"Flag": true
+}
+,{
+"Timestamp": 1385724532695, 
+"Action": "codeProduction", 
+"Subtype": "2", 
+"Duration": 512, 
+"Flag": true
+}
+,{
+"Timestamp": 1385724699934, 
+"Action": "test-addition", 
+"Subtype": "2", 
+"Duration": 167, 
+"Flag": true
+}
+,{
+"Timestamp": 1385724887513, 
+"Action": "test-last", 
+"Subtype": "2", 
+"Duration": 187, 
+"Flag": true
+}
+,{
+"Timestamp": 1385725246062, 
+"Action": "test-first", 
+"Subtype": "2", 
+"Duration": 358, 
+"Flag": true
+}
+,{
+"Timestamp": 1385725330987, 
+"Action": "refactoring", 
+"Subtype": "1A", 
+"Duration": 84, 
+"Flag": true
+},{
+"Timestamp": 1385723915159, 
+"Action": "test-last", 
+"Subtype": "2", 
+"Duration": 390, 
+"Flag": true
+}
+,{
+"Timestamp": 1385724008786, 
+"Action": "test-first", 
+"Subtype": "1", 
+"Duration": 93, 
+"Flag": true
+}
+,{
+"Timestamp": 1385724019818, 
+"Action": "regression", 
+"Subtype": "1", 
+"Duration": 11, 
+"Flag": true
+}
+,{
+"Timestamp": 1385724532695, 
+"Action": "codeProduction", 
+"Subtype": "2", 
+"Duration": 512, 
+"Flag": true
+}
+,{
+"Timestamp": 1385724699934, 
+"Action": "test-addition", 
+"Subtype": "2", 
+"Duration": 167, 
+"Flag": true
+}
+,{
+"Timestamp": 1385724887513, 
+"Action": "test-last", 
+"Subtype": "2", 
+"Duration": 187, 
+"Flag": true
+}
+,{
+"Timestamp": 1385725246062, 
+"Action": "test-first", 
+"Subtype": "2", 
+"Duration": 358, 
+"Flag": true
+}
+,{
+"Timestamp": 1385725330987, 
+"Action": "refactoring", 
+"Subtype": "1A", 
+"Duration": 84, 
+"Flag": true
+},{
+"Timestamp": 1385724699934, 
+"Action": "test-addition", 
+"Subtype": "2", 
+"Duration": 167, 
+"Flag": true
+}
+,{
+"Timestamp": 1385724887513, 
+"Action": "test-last", 
+"Subtype": "2", 
+"Duration": 187, 
+"Flag": true
+}
+,{
+"Timestamp": 1385725246062, 
+"Action": "test-first", 
+"Subtype": "2", 
+"Duration": 358, 
+"Flag": true
+}
+,{
+"Timestamp": 1385725330987, 
+"Action": "refactoring", 
+"Subtype": "1A", 
+"Duration": 84, 
+"Flag": true
+},{
+"Timestamp": 1385723915159, 
+"Action": "test-last", 
+"Subtype": "2", 
+"Duration": 390, 
+"Flag": true
+}
+,{
+"Timestamp": 1385724008786, 
+"Action": "test-first", 
+"Subtype": "1", 
+"Duration": 93, 
+"Flag": true
+}
+,{
+"Timestamp": 1385724019818, 
+"Action": "regression", 
+"Subtype": "1", 
+"Duration": 11, 
+"Flag": true
+}
+,{
+"Timestamp": 1385724532695, 
+"Action": "codeProduction", 
+"Subtype": "2", 
+"Duration": 512, 
+"Flag": true
+}
+,{
+"Timestamp": 1385724699934, 
+"Action": "test-addition", 
+"Subtype": "2", 
+"Duration": 167, 
+"Flag": true
+}
+,{
+"Timestamp": 1385724887513, 
+"Action": "test-last", 
+"Subtype": "2", 
+"Duration": 187, 
+"Flag": true
+}
+,{
+"Timestamp": 1385725246062, 
+"Action": "test-first", 
+"Subtype": "2", 
+"Duration": 358, 
+"Flag": true
+}
+,{
+"Timestamp": 1385725330987, 
+"Action": "refactoring", 
+"Subtype": "1A", 
+"Duration": 84, 
+"Flag": true
+}
+
+
+]
+>>>>>>> upstream/master
