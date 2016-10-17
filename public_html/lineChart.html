@@ -7,7 +7,7 @@ and open the template in the editor.
 
 <html lang="en">
 
-<<<<<<< HEAD
+
   <head>
     <meta charset="utf-8">
     <title>Zorro Episode Visualization</title>
@@ -24,28 +24,6 @@ and open the template in the editor.
         font-size: 11px;
       }
       .line{
-=======
-<head>
-  <meta charset="utf-8">
-  <title>Zorro Episode Visualization</title>
-  <style>
-    .axis path,
-    .axis line {
-      fill: none;
-      stroke: black;
-      shape-rendering: crispEdges;
-    }
-
-    .axis text {
-      font-family: sans-serif;
-      font-size: 11px;
-    }
-    .line{
->>>>>>> upstream/master
-        fill: none;
-        stroke: steelblue;
-        stroke-width: 1.5px;
-      }
 
 
     </style>
@@ -54,9 +32,30 @@ and open the template in the editor.
 
   <body>
     <button id="myButton" class="float-left submit-button" >bar Chart</button>
+	<input type="file" id="selectFiles" value="Import" /><br />
+    <button id="import">Import</button>
     <script type="text/javascript">
+	var reader = new FileReader();
+	  var formatted = "";
 
-      var obj = new Object();
+	  document.getElementById('import').onclick = function() {
+	    var files = document.getElementById('selectFiles').files;
+	    console.log(files);
+	    if (files.length <= 0) {
+	      return false;
+	    }
+
+	    var fr = new FileReader();
+
+	    fr.onload = function(e) {
+	      var result = JSON.parse(e.target.result);
+	      //JSON content is in the FORMATTED variable. Using that as data gives FORBIDDEN
+	      formatted = JSON.stringify(result, null, 2);
+	      newData(result);
+	    }
+	    fr.readAsText(files.item(0));
+	  };
+
       var informations = [];
       var durations = [];
       var total = 0;
@@ -155,26 +154,19 @@ and open the template in the editor.
 
       //Fucntion that gets the data from the JSON-server and transfers it form
       //of readable object
-      function newData(){
-        d3.json(url, function(error, data) {
-<<<<<<< HEAD
-          data.forEach(function(d,i) {
-            durations[i]=(d.Duration/60);
-          });
-          console.log("datan creation called");
+	  function newData(formatted){
+	    // d3.json(formatted, function(error, data) {
+            //   if(error) {
+            //     console.log("error");
+            //   }
+	      formatted.forEach(function(d,i) {
+			durations[i]=(d.Duration/60);
+	      });
+	      console.log("datan creation called");
           createMatrix(durations);
-          renderAxis();
-          drawLegend(data);
+          renderAxis();    
 
-=======
-            data.forEach(function(d,i) {
-                durations[i]=(d.Duration/60);
-            });
-            console.log("datan creation called");
-            createMatrix(durations);          
->>>>>>> upstream/master
-        });
-      };
+	  };
 
       function createMatrix(data){
         for(i=0;i<data.length;i++){
@@ -194,7 +186,6 @@ and open the template in the editor.
         path.enter().append('svg:path').attr('d', function(d){return line(d)})
         .style('stroke-width', 1)
         .style('stroke', 'steelblue');
-<<<<<<< HEAD
         path.exit().remove()
       };
 
@@ -297,24 +288,10 @@ and open the template in the editor.
         location.href = "index.html";
       };
 
-      newData();
-      setInterval(newData, 2000);
     </script>
   </body>
-=======
-    path.exit().remove()
-    };
-    
-
-    document.getElementById("myButton").onclick = function () {
-        location.href = "http://localhost:8383/TDD-Visualization/index.html";
-    };
-    
-    newData();
-    setInterval(newData, 2000);
   </script>
 </body>
->>>>>>> upstream/master
 
 </html>
 

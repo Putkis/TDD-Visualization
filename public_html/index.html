@@ -55,6 +55,7 @@ and open the template in the editor.
 	      //JSON content is in the FORMATTED variable. Using that as data gives FORBIDDEN
 	      formatted = JSON.stringify(result, null, 2);
 	      newData(result);
+		  drawLegend(result);
 	    }
 	    fr.readAsText(files.item(0));
 	  };
