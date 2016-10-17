@@ -4,5 +4,12 @@
     "keywords": ["util", "functional", "server", "client", "browser"],
     "author": "Putkis",
     "contributors": [],
-    "dependencies": {}
+    "dependencies": {},
+    "devDependencies" :{
+      "json-server": "0.8.10",
+      "http-server": "0.9.0"
+    },
+    "scripts": {
+      "start": "http-server ./public_html & json-server --watch ./public_html/firstJSON.json"
+    }
 }
